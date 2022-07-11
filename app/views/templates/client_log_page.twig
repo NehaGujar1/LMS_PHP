@@ -1,0 +1,33 @@
+<h1>CLient login</h1>
+<form action="/client_log_pg" method="post">
+<ol>
+    {% if sp!=null %}
+    Book name and author to check out
+    {% endif %}
+  {% for post in sp %}
+  <li>
+    {{post.author}} - {{post.book_name}} <input type="submit" name="client_log_pg" style="color: white"  value="{{post.isbn}},--{{name}}"></input>
+  </li>
+  {% endfor %}
+</ol>
+
+  <ol>
+{% if ur!=null %}
+    Book name and author to check in
+    {% endif %}
+  {% for post in ur %}
+  <li>
+    {{post.author}} - {{post.book_name}} <input type="submit" name="ur_bkk" style="color: white"  value="{{post.isbn}},--{{name}}"></input>
+  </li>
+  {% endfor %}
+</ol>
+
+{% if sent %}
+  <p>
+    <em><strong>Successfully</strong> done!</em>
+  </p>
+  {% endif %}
+  <p>Total fees you have to pay are :{{var.fees}}</p>
+  <input type ="submit" name="end" value="Go back">
+  <input type = "submit" value = "Log out" name="Log_out"></input>
+</form>

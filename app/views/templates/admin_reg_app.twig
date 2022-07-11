@@ -1,0 +1,25 @@
+<h1>Check out requests</h1>
+<form action="/admin_reg_app" method="post">
+<ol>
+    {% if regs!=null %}
+    Name
+    {% endif %}
+  {% for post in regs %}
+  <li>
+    {{post.name}} <input type="submit" name="admin_reg_app" style="color: white"  value="{{post.name}}"></input><input type="submit" name="admin_reg_app_d" style="color: white"  value="{{post.name}}"></input>
+  </li>
+  {% endfor %}
+</ol>
+
+{% if approved %}
+  <p>
+    <em><strong>Successfully</strong> approved!</em>
+  </p>
+  {% endif %}
+  {% if disapproved %}
+  <p>
+    <em><strong>Successfully</strong> disapproved!</em>
+  </p>
+  {% endif %}
+  <input type ="submit" name="end" value="Go back">
+</form>

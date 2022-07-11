@@ -1,0 +1,22 @@
+<form action="/add_books" method="post">
+        <input type="text" name="add_new_book" placeholder="Book name">
+        <input type="text" name="add_author" placeholder="Author">
+        <input type="number" name="add_qty" placeholder= 0 >
+        <button type="submit" name="add_books" style="color: white">Add</button>
+        </form>
+<ol>
+  {% if posts!=null %}
+    Book name and author
+    {% endif %}
+  {% for post in posts %}
+  <li>
+    {{post.book_name}} - {{post.author}}
+  </li>
+  {% endfor %}
+  {% if added %}
+  <p>
+    <em><strong>Successfully</strong> added!</em>
+  </p>
+  {% endif %}
+  <input type ="submit" name="end" value="Go back">
+</ol>

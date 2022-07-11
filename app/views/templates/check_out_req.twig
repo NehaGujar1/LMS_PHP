@@ -1,0 +1,25 @@
+<h1>Check out requests</h1>
+<form action="/check_out_req" method="post">
+<ol>
+    {% if reqs!=null %}
+    Isbn and name
+    {% endif %}
+  {% for post in reqs %}
+  <li>
+    {{post.isbn}} - {{post.name}} <input type="submit" name="check_out_req" style="color: white"  value="{{post.isbn}},--{{post.name}}">Approved</input><input type="submit" name="check_out_req_d" style="color: white"  value="{{post.isbn}},--{{post.name}}">Disapproved</input>
+  </li>
+  {% endfor %}
+</ol>
+
+{% if approved %}
+  <p>
+    <em><strong>Successfully</strong> approved!</em>
+  </p>
+  {% endif %}
+  {% if disapproved %}
+  <p>
+    <em><strong>Successfully</strong> disapproved!</em>
+  </p>
+  {% endif %}
+  <input type ="submit" name="end" value="Go back">
+</form>

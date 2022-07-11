@@ -1,0 +1,20 @@
+<h1>Delete book</h1>
+<form action="/delete_books" method="post">
+<ol>
+    {% if posts!=null %}
+    Book name
+    {% endif %}
+  {% for post in posts %}
+  <li>
+    <input type="submit" name="delete_books" style="color: black"  value="{{post.book_name}}"></input>
+  </li>
+  {% endfor %}
+</ol>
+
+{% if deleted %}
+  <p>
+    <em><strong>Successfully</strong> deleted!</em>
+  </p>
+  {% endif %}
+  <input type ="submit" name="end" value="Go back">
+</form>

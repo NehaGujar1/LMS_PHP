@@ -1,0 +1,21 @@
+<h1>Hello reg page client</h1>
+<form action="/client_reg_pg" method="post">
+<ol>
+    {% if sp!=null %}
+    Book name and author
+    {% endif %}
+  {% for post in sp %}
+  <li>
+    {{post.author}} - {{post.book_name}} <input type="submit" name="client_reg_pg" style="color: white"  value="{{post.isbn}},--{{name}}"></input>
+  </li>
+  {% endfor %}
+</ol>
+
+{% if sent %}
+  <p>
+    <em><strong>Successfully</strong> sent the request!</em>
+  </p>
+  {% endif %}
+  <input type ="submit" name="end" value="Go back">
+  <input type = "submit" value = "Log out" name="Log_out"></input>
+</form>
