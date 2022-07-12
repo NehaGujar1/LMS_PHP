@@ -17,11 +17,13 @@ class Add_books{
         if($array2!=null){
             require __DIR__."./../views/templates/admin_log_page.twig";
         }
+        else{
         $res = \Model\Post::add_book($bk_name,$author,$qty);
         echo \View\Loader::make()->render("add_books.twig", array(
             //echo "E1";
             "posts" => \Model\Post::get_all(),
             "added" => true,
         ));
+    }
     }
 }

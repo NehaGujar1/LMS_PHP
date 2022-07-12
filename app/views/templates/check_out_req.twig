@@ -1,15 +1,104 @@
+<head><style>
+body {
+    background: #add8e6;
+}
+h1,p{
+   font-family: -apple-system,system-ui,"Segoe UI","Liberation Sans",sans-serif;
+   font-size: 26px;
+   font-weight: 400;
+   text-align: center;
+   
+}
+.c1{
+    display: grid;
+    justify-content: center;
+}
+/* CSS */
+.input {
+  background-color: #e1ecf4;
+  border-radius: 6px;
+  border: 1px solid #7aa7c7;
+  box-shadow: rgba(255, 255, 255, .7) 0 1px 0 0 inset;
+  box-sizing: border-box;
+  color: #39739d;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system,system-ui,"Segoe UI","Liberation Sans",sans-serif;
+  font-size: 0px;
+  font-weight: 400;
+  line-height: 1.15385;
+  outline: none;
+  padding: 8px .8em;
+  position: center;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  white-space: nowrap;
+  width:100%;
+}
+#tit{
+  font-size: 13px;
+}
+#tit2{
+  font-size: 13px;
+}
+#c2{
+  font-size: 13px;
+  align:center;
+  position:center;
+  width: 200px;
+}
+.input:hover,
+.input:focus {
+  background-color: #b3d3ea;
+  color: #2c5777;
+}
+.input .app {
+  content:"Approve";
+  font-size: 13px;
+}
+.input:focus {
+  box-shadow: 0 0 0 4px rgba(0, 149, 255, .15);
+  border-radius : 2 vh;
+}
+
+.input:active {
+  background-color: #a0c7e4;
+  box-shadow: none;
+  color: #2c5777;
+}
+pre{
+    height: 15vh;
+}
+</style>
+</head>
+<pre> </pre>
 <h1>Check out requests</h1>
-<form action="/check_out_req" method="post">
-<ol>
+<hr>
+<form action="/check_out_req" method="post" class="c1">
+<table>
     {% if reqs!=null %}
-    Isbn and name
+    <tr id="tit">
+    <th>Name</th>
+     <th>Book name</th>
+     <th>Approve</th>
+     <th>Disapprove</th>
+    </tr>
     {% endif %}
+    <tbody id="tit2">
   {% for post in reqs %}
-  <li>
-    {{post.isbn}} - {{post.name}} <input type="submit" name="check_out_req" style="color: white"  value="{{post.isbn}},--{{post.name}}">Approved</input><input type="submit" name="check_out_req_d" style="color: white"  value="{{post.isbn}},--{{post.name}}">Disapproved</input>
-  </li>
+  <tr>
+    <td>{{post.name}}</td>
+    <td>{{post.book_name}}</td>
+    <td><input type="submit" class="input" name="check_out_req" value="{{post.isbn}},--{{post.name}}"></input></td>
+    <td><input type="submit"  class="input" name="check_out_req_d" value="{{post.isbn}},--{{post.name}}"></input></td>
+  </tr>
   {% endfor %}
-</ol>
+  </tbody>
+</table>
 
 {% if approved %}
   <p>
@@ -21,5 +110,5 @@
     <em><strong>Successfully</strong> disapproved!</em>
   </p>
   {% endif %}
-  <input type ="submit" name="end" value="Go back">
+  <input type ="submit" name="end" value="Go back" id="c2" class="input">
 </form>

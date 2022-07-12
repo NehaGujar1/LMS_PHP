@@ -1,12 +1,77 @@
+<head><style>
+body {
+    background: #add8e6;
+}
+h1{
+   font-family: -apple-system,system-ui,"Segoe UI","Liberation Sans",sans-serif;
+   font-size: 26px;
+   font-weight: 400;
+   text-align: center;
+   
+}
+.c1{
+    display: grid;
+    column-gap: 4px;
+    justify-content: center;
+}
+/* CSS */
+.input {
+  background-color: #e1ecf4;
+  border-radius: 6px;
+  border: 1px solid #7aa7c7;
+  box-shadow: rgba(255, 255, 255, .7) 0 1px 0 0 inset;
+  box-sizing: border-box;
+  color: #39739d;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system,system-ui,"Segoe UI","Liberation Sans",sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.15385;
+  outline: none;
+  padding: 8px .8em;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
+.input:hover,
+.input:focus {
+  background-color: #b3d3ea;
+  color: #2c5777;
+}
+
+.input:focus {
+  box-shadow: 0 0 0 4px rgba(0, 149, 255, .15);
+  border-radius : 2 vh;
+}
+
+.input:active {
+  background-color: #a0c7e4;
+  box-shadow: none;
+  color: #2c5777;
+}
+pre{
+    height: 40vh;
+}
+</style>
+</head>
+<pre> </pre>
 <h1>Client registration</h1>
+<hr>
 <form action="/client_reg" method="POST" id="client_page">
-            <div>
-                <input type="text" name="name" placeholder="username" id="i1">
+            <div class="c1">
+                <input type="text" name="name" placeholder="username" class="input" id="i1">
                 <br>
-                <input type="password" name="password" placeholder="password" id="i2">
+                <input type="password" name="password" placeholder="password" class="input" id="i2">
                 <br>
-                <input type="password" name="confirm_password" placeholder="confirm password" id="i3">
+                <input type="password" name="confirm_password" class="input" placeholder="confirm password" id="i3">
                 <br>
-                <input type="submit" name="client_registration_submit" value="client_registration" id="submit_type"/>
+                <input type="submit" name="client_registration_submit" class="input" value="Client Registration" id="submit_type"/>
             </div>
         </form>

@@ -99,7 +99,7 @@ public static function insert_2($name,$password,$role) {
     }
     public static function get_all_req(){
         $db = \DB::get_instance();
-        $stmt = $db->prepare("SELECT requests.* from requests inner join books on books.isbn = requests.isbn where books.qty_left > 0");
+        $stmt = $db->prepare("SELECT requests.*,books.book_name from requests inner join books on books.isbn = requests.isbn");
         //Delete the other requests??
         $stmt->execute();
         $rows = $stmt->fetchAll();

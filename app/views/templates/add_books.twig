@@ -1,22 +1,107 @@
-<form action="/add_books" method="post">
-        <input type="text" name="add_new_book" placeholder="Book name">
-        <input type="text" name="add_author" placeholder="Author">
-        <input type="number" name="add_qty" placeholder= 0 >
-        <button type="submit" name="add_books" style="color: white">Add</button>
-        </form>
-<ol>
+<head><style>
+body {
+    background: #add8e6;
+}
+h1,p{
+   font-family: -apple-system,system-ui,"Segoe UI","Liberation Sans",sans-serif;
+   font-size: 26px;
+   font-weight: 400;
+   text-align: center;
+   
+}
+.c1{
+    display: grid;
+    justify-content: center;
+}
+/* CSS */
+.input {
+  background-color: #e1ecf4;
+  border-radius: 6px;
+  border: 1px solid #7aa7c7;
+  box-shadow: rgba(255, 255, 255, .7) 0 1px 0 0 inset;
+  box-sizing: border-box;
+  color: #39739d;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system,system-ui,"Segoe UI","Liberation Sans",sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.15385;
+  outline: none;
+  padding: 8px .8em;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+#tit{
+  font-size: 13px;
+}
+#tit2{
+  font-size: 13px;
+}
+#c2{
+  font-size: 13px;
+  align:center;
+  position:center;
+}
+.input:hover,
+.input:focus {
+  background-color: #b3d3ea;
+  color: #2c5777;
+}
+.input .app {
+  content:"Approve";
+  font-size: 13px;
+}
+.input:focus {
+  box-shadow: 0 0 0 4px rgba(0, 149, 255, .15);
+  border-radius : 2 vh;
+}
+
+.input:active {
+  background-color: #a0c7e4;
+  box-shadow: none;
+  color: #2c5777;
+}
+pre{
+    height: 20vh;
+}
+</style>
+</head>
+<pre> </pre>
+<h1>Add books</h1>
+<hr>
+<div  class="c1">
+<form action="/add_books" method="post" >
+        <input type="text" name="add_new_book" placeholder="Book name" class="input">
+        <input type="text" name="add_author" placeholder="Author" class="input">
+        <input type="number" name="add_qty" placeholder= 0 class="input">
+        <button type="submit" name="add_books" class="input">Add</button>
+       
+<table>
   {% if posts!=null %}
-    Book name and author
+  <tr>
+    <th id="tit">Book name</th>
+    <th id="tit">Author</th>
+  </tr>  
     {% endif %}
   {% for post in posts %}
-  <li>
-    {{post.book_name}} - {{post.author}}
-  </li>
+  <tr>
+  <td id="tit2">{{post.book_name}}</td>
+  <td id="tit2">{{post.author}}</td>
+  </tr>
   {% endfor %}
+  </table>
   {% if added %}
   <p>
     <em><strong>Successfully</strong> added!</em>
   </p>
   {% endif %}
-  <input type ="submit" name="end" value="Go back">
-</ol>
+  <input type ="submit" name="end" value="Go back" id="c2" class="input">
+ </form>
+</div>

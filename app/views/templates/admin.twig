@@ -1,5 +1,71 @@
+<style>
+body {
+    background: #add8e6;
+}
+h1{
+   font-family: -apple-system,system-ui,"Segoe UI","Liberation Sans",sans-serif;
+   font-size: 26px;
+   font-weight: 400;
+   text-align: center;
+   
+}
+.c1{
+    display: grid;
+    column-gap: 4px;
+    justify-content: center;
+    grid-auto-flow: column;
+}
+/* CSS */
+.input {
+  background-color: #e1ecf4;
+  border-radius: 6px;
+  border: 1px solid #7aa7c7;
+  box-shadow: rgba(255, 255, 255, .7) 0 1px 0 0 inset;
+  box-sizing: border-box;
+  color: #39739d;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system,system-ui,"Segoe UI","Liberation Sans",sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.15385;
+  
+  outline: none;
+  padding: 8px .8em;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  white-space: nowrap;
+}
+
+.input:hover,
+.input:focus {
+  background-color: #b3d3ea;
+  color: #2c5777;
+}
+
+.input:focus {
+  box-shadow: 0 0 0 4px rgba(0, 149, 255, .15);
+  border-radius : 2 vh;
+}
+
+.input:active {
+  background-color: #a0c7e4;
+  box-shadow: none;
+  color: #2c5777;
+}
+pre{
+    height: 40vh;
+}
+</style>
+<pre> </pre>
 <h1>Admin</h1>
-<form action="/admin" method="POST">
-<input type = "submit" value = "admin_login" name="admin_login_in"></input>
-<input type = "submit" value = "admin_registration" name="admin_registration_in"></input>
-</form>
+<hr>
+<form action="/admin" method="POST"><div class="c1">
+<input type = "submit" value = "Admin Login" name="admin_login_in" class="input"></input>
+<input type = "submit" value = "Admin Registration" name="admin_registration_in" class="input"></input>
+</div></form>

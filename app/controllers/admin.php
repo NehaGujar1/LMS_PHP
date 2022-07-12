@@ -15,13 +15,13 @@ public function get() {
         // echo "hello";
         // echo $client_login;
         // echo $client_reg;
-        if($admin_login==admin_login) {
+        if($admin_login=='Admin Login') {
             // echo "hi1";
             //redirect("/Client");
              require __DIR__."./../views/templates/admin_log.twig";
 
         }
-        else if($admin_reg==admin_registration) {
+        else if($admin_reg=='Admin Registration') {
             // echo "hi2";
              require __DIR__."./../views/templates/admin_reg.twig";
         }

@@ -28,12 +28,12 @@ class Home {
         // echo "hello";
         // echo $admin;
         // echo $client;
-        if($admin==admin) {
+        if($admin==Admin) {
             // echo "hi1";
             require __DIR__."./../views/templates/admin.twig";
             
         }
-        else if($client==client) {
+        else if($client==Client) {
             // echo "hi2";
             //redirect('/Controller/Client');
             require __DIR__."./../views/templates/client.twig";

@@ -1,15 +1,97 @@
+<head><style>
+body {
+    background: #add8e6;
+}
+h1,p{
+   font-family: -apple-system,system-ui,"Segoe UI","Liberation Sans",sans-serif;
+   font-size: 26px;
+   font-weight: 400;
+   text-align: center;
+   
+}
+.c1{
+    display: grid;
+    justify-content: center;
+}
+/* CSS */
+.input {
+  background-color: #e1ecf4;
+  border-radius: 6px;
+  border: 1px solid #7aa7c7;
+  box-shadow: rgba(255, 255, 255, .7) 0 1px 0 0 inset;
+  box-sizing: border-box;
+  color: #39739d;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system,system-ui,"Segoe UI","Liberation Sans",sans-serif;
+  font-size: 0px;
+  font-weight: 400;
+  line-height: 1.15385;
+  outline: none;
+  padding: 8px .8em;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  white-space: nowrap;
+  width: 45px;
+}
+#tit{
+  font-size: 13px;
+}
+#tit2{
+  font-size: 13px;
+}
+#c2{
+  font-size: 13px;
+  width:200px;
+  position:center;
+}
+.input:hover,
+.input:focus {
+  background-color: #b3d3ea;
+  color: #2c5777;
+}
+.input .app {
+  content:"Approve";
+  font-size: 13px;
+}
+.input:focus {
+  box-shadow: 0 0 0 4px rgba(0, 149, 255, .15);
+  border-radius : 2 vh;
+}
+
+.input:active {
+  background-color: #a0c7e4;
+  box-shadow: none;
+  color: #2c5777;
+}
+pre{
+    height: 20vh;
+}
+</style>
+</head>
+<pre> </pre>
 <h1>Check out requests</h1>
-<form action="/admin_reg_app" method="post">
-<ol>
+<hr>
+<form action="/admin_reg_app" method="post"  class="c1">
+<table>
     {% if regs!=null %}
-    Name
+    <th id="tit">Name</th>
+    <th id="tit">Approve</th>
+    <th id="tit">Disapprove</th>
     {% endif %}
   {% for post in regs %}
-  <li>
-    {{post.name}} <input type="submit" name="admin_reg_app" style="color: white"  value="{{post.name}}"></input><input type="submit" name="admin_reg_app_d" style="color: white"  value="{{post.name}}"></input>
-  </li>
+  <tr>
+    <td><p id="tit2">{{post.name}}</p></td>
+    <td><input type="submit" class="input app" name="admin_reg_app"  value="{{post.name}}"></input></td>
+    <td><input type="submit" name="admin_reg_app_d" class="input disapp" value="{{post.name}}"></input></td>
+  </tr>
   {% endfor %}
-</ol>
+</table>
 
 {% if approved %}
   <p>
@@ -21,5 +103,5 @@
     <em><strong>Successfully</strong> disapproved!</em>
   </p>
   {% endif %}
-  <input type ="submit" name="end" value="Go back">
+  <input type ="submit" name="end" class="input" id="c2" value="Go back">
 </form>
