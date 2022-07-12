@@ -12,6 +12,7 @@ h1,p{
 .c1{
     display: grid;
     justify-content: center;
+    align-items:center;
 }
 /* CSS */
 .input {
@@ -47,7 +48,9 @@ h1,p{
 #c2{
   font-size: 13px;
   align:center;
-  position:center;
+  display:grid;
+  justify-content:center;
+  margin-left: 25vw;
 }
 .input:hover,
 .input:focus {
@@ -71,6 +74,10 @@ h1,p{
 pre{
     height: 20vh;
 }
+#tb{
+  display:grid;
+  justify-content:center;
+}
 </style>
 </head>
 <pre> </pre>
@@ -83,7 +90,7 @@ pre{
         <input type="number" name="add_qty" placeholder= 0 class="input">
         <button type="submit" name="add_books" class="input">Add</button>
        
-<table>
+<table id="tb">
   {% if posts!=null %}
   <tr>
     <th id="tit">Book name</th>

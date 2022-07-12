@@ -10,7 +10,7 @@ class Admin_log {
         require __DIR__."./../views/templates/admin_log.twig";
     }
     public function post() {
-        echo "hii";
+        //echo "hii";
          
         $name = $_POST["name"];
         $password = $_POST["password"];
@@ -29,7 +29,9 @@ class Admin_log {
             require __DIR__."./../views/templates/admin_log_page.twig" ;
         }
         else{
-            echo "Incorrect credentials";
+            echo \View\Loader::make()->render("a.twig", array(
+                "variable" => "Incorrect credentials",
+            ));
         }
     }
 }

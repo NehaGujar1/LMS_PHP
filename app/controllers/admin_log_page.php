@@ -17,11 +17,11 @@ class Admin_log_page {
             require __DIR__."./../views/templates/home2.twig";
         }
         else if($add_books=='Add books') {
-            echo "hello";
+            //echo "hello";
             // render("templates/add_books.twig", array(
             //     "post" => \Model\Post::get_all(),
             // ));
-            echo "end";
+            //echo "end";
             echo \View\Loader::make()->render("add_books.twig", array(
                      "posts" => \Model\Post::get_all(),
                  ));

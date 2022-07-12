@@ -1,21 +1,105 @@
-<h1>Hello reg page client</h1>
-<form action="/client_reg_pg" method="post">
-<ol>
-    {% if sp!=null %}
-    Book name and author
-    {% endif %}
-  {% for post in sp %}
-  <li>
-    {{post.author}} - {{post.book_name}} <input type="submit" name="client_reg_pg" style="color: white"  value="{{post.isbn}},--{{name}}"></input>
-  </li>
-  {% endfor %}
-</ol>
+<head><style>
+body {
+    background: #add8e6;
+}
+h1,p{
+   font-family: -apple-system,system-ui,"Segoe UI","Liberation Sans",sans-serif;
+   font-size: 26px;
+   font-weight: 400;
+   text-align: center;
+   
+}
+.c1{
+    display: grid;
+    justify-content: center;
+}
+#c3{
+  font-size: 13px;
+    display: grid;
+    justify-content: center;
+}
+#c4{
+  font-size: 13px;
+    display: grid;
+    justify-content: center;
+}
+/* CSS */
+.input {
+  background-color: #e1ecf4;
+  border-radius: 6px;
+  border: 1px solid #7aa7c7;
+  box-shadow: rgba(255, 255, 255, .7) 0 1px 0 0 inset;
+  box-sizing: border-box;
+  color: #39739d;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system,system-ui,"Segoe UI","Liberation Sans",sans-serif;
+  font-size: 0px;
+  font-weight: 400;
+  line-height: 1.15385;
+  outline: none;
+  padding: 8px .8em;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  white-space: nowrap;
+  width:100%;
+}
+#c5{
+  font-size:13px;
+}
+.input:hover,
+.input:focus {
+  background-color: #b3d3ea;
+  color: #2c5777;
+}
 
+.input:focus {
+  box-shadow: 0 0 0 4px rgba(0, 149, 255, .15);
+  border-radius : 2 vh;
+}
+
+.input:active {
+  background-color: #a0c7e4;
+  box-shadow: none;
+  color: #2c5777;
+}
+pre{
+    height: 20vh;
+}
+.ss{
+  font-size:13px;
+}
+</style>
+</head>
+<pre> </pre>
+<h1>CLient registration</h1>
+<hr>
+<form action="/client_reg_pg" method="post" class="c1">
+<table>
+    {% if sp!=null %}<tr id="tit">
+    <th class="ss">Book name</th> 
+    <th class="ss">Author</th> 
+    <th class="ss">Check out</th>
+    </tr>{% endif %}
+  {% for post in sp %}
+  <tbody>
+  <tr>
+    <td class="ss">{{post.book_name}}</td> 
+    <td class="ss">{{post.author}}</td>
+    <td><input type="submit" class="input" name="client_reg_pg" value="{{post.isbn}},--{{name}}"></input></td>
+  </tr></tbody>
+  {% endfor %}
+</table>
 {% if sent %}
   <p>
     <em><strong>Successfully</strong> sent the request!</em>
   </p>
   {% endif %}
-  <input type ="submit" name="end" value="Go back">
-  <input type = "submit" value = "Log out" name="Log_out"></input>
+  <input type ="submit" name="end" value="Go back"  class="input" id="c3"></input>
+  <input type = "submit" value = "Log out" name="Log_out"  id="c4" class="input"></input>
 </form>

@@ -31,7 +31,7 @@ class Post {
         $stmt->execute([$role,$name]);
         $result = $stmt->fetch();
         // echo "hi2";
-        print_r($result);
+        //print_r($result);
         $vart = $result[2];
         // echo $vart;
         // echo "hi3";
@@ -62,8 +62,8 @@ class Post {
         // $stmt->execute([$name],[$hash],[$salt],[$role]);
         $stmt = $db->prepare("INSERT INTO client_admin (name, hash, salt, role) VALUES(?,?,?,?)");
         $stmt->execute([$name,$hash,$salt,$role]);
-        $stmt = $db->prepare("INSERT INTO total_amt (name) VALUES(?)");
-        $stmt->execute([$name]);
+        $stmt = $db->prepare("INSERT INTO total_amt (name,fees) VALUES(?,?)");
+        $stmt->execute([$name,0]);
         // $stmt = $db->prepare("INSERT INTO client_admin (name) VALUES (?)");
         // $stmt->execute([$name]);            
         // $stmt = $db->prepare("INSERT INTO client_admin (name) VALUES (?)");
@@ -160,7 +160,7 @@ public static function insert_2($name,$password,$role) {
         $stmt = $db->prepare("DELETE FROM requests WHERE isbn = ?");
         $stmt->execute([$TEMP]);
         //$result = $stmt->fetch();
-        echo "DELETED";
+        //echo "DELETED";
     }
     public static function check_req($array,$name){
         $db = \DB::get_instance();
@@ -206,6 +206,8 @@ public static function insert_2($name,$password,$role) {
     }
     public static function check_r_c($name,$isbn) {
         $db = \DB::get_instance();
+        //echo $name;
+        //echo $isbn;
         $stmt = $db->prepare("INSERT INTO requests (name, isbn) VALUES(?,?)");
         $stmt->execute([$name,$isbn]);
         $stmt3 = $db->prepare("SELECT * FROM books WHERE isbn = ?");
@@ -223,7 +225,7 @@ public static function insert_2($name,$password,$role) {
         $stmt = $db->prepare("SELECT books.* from books inner join books_user on books_user.isbn = books.isbn where books_user.name = ?");
         $stmt->execute([$name]);
         $rows = $stmt->fetchAll();
-        echo $rows[0];
+        //echo $rows[0];
         $var = time();
         return $rows;
         // $stmt = $db->prepare("SELECT * FROM books where qty_left>0");
@@ -239,37 +241,37 @@ public static function insert_2($name,$password,$role) {
         $stmt3->execute([$isbn]);
         $res = $stmt3->fetch();
         //echo $res;
-        echo $res[4];
-        echo "hi";
+        //echo $res[4];
+        //echo "hi";
         $temp2 = $res[4] + 1;
         $stmt2 = $db->prepare("UPDATE books SET qty_left = ? WHERE isbn = ?");
         $stmt2->execute([$temp2,$isbn]);
         $var = time();
-        echo $var;
-        echo "vvv";
+        //echo $var;
+        //echo "vvv";
         $fees = 0;
         $stmt2 = $db->prepare("SELECT * FROM fees WHERE isbn = ? AND name = ?");
         $stmt2->execute([$isbn,$name]);
         //echo $stmt2;
         $res = $stmt2->fetch();
         $diff = $var - $res[2];
-        echo $res[2];
+        //echo $res[2];
         if($diff>604800){
             $fees = (int)(($diff -604800)/86400) ;
             //Every day charge is 1 Rs
         }
-        echo $fees;
+        //echo $fees;
         $stmt2 = $db->prepare("UPDATE fees SET out_time = ?, fees = ? WHERE isbn = ? AND name = ?");
         $stmt2->execute([$var,$fees,$isbn,$name]);
-        echo "jjj";
+        //echo "jjj";
         $stmt2 = $db->prepare("SELECT * FROM total_amt WHERE name = ?");
         $stmt2->execute([$name]);
-        echo "kkk";
+        //echo "kkk";
         $res = $stmt2->fetch();
         $temp = $res[1] + $fees ;
         $stmt2 = $db->prepare("UPDATE total_amt SET fees = ? WHERE name = ?");
         $stmt2->execute([$temp,$name]);
-        echo "ttt";
+        //echo "ttt";
     }
     public static function fees_found($name){
         $db = \DB::get_instance();

@@ -33,10 +33,14 @@ class Client_reg {
             ));
         }
         elseif($res==null && $password!=$confirm_password){
-            echo "Passwords don't match";
+            echo \View\Loader::make()->render("a.twig", array(
+                "variable" => "Passwords don't match",
+            ));
         }
         else{
-            echo "Already registered";
+            echo \View\Loader::make()->render("a.twig", array(
+                "variable" => "Already registered",
+            ));
         }
     }
 }

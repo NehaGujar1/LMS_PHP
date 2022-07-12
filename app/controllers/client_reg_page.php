@@ -5,7 +5,7 @@ namespace Controller;
 class Client_reg_pg{
     
     public function get($name){
-        session_start();
+        //session_start();
         echo \View\Loader::make()->render("client_reg_page.twig", array(
             "sp" => \Model\Post::get_all_sp(),
             "name" => $name,

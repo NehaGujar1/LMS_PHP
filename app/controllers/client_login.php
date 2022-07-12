@@ -10,7 +10,7 @@ class Client_log {
         require __DIR__."./../views/templates/client_log.twig";
     }
     public function post() {
-        echo "hii";
+        //echo "hii";
         $name = $_POST["name"];
         $password = $_POST["password"];
         $role = 'client';
@@ -19,22 +19,24 @@ class Client_log {
         // ));
         //echo "hello";
         $res =  \Model\Post::check_2($name,$password,'user');
-        echo "hih";
+        //echo "hih";
         if($res!=null){
             session_start();
             $_SESSION["username"] = $name;
             $_SESSION["role"] = 'user';
-            echo "hehehe";
+            //echo "hehehe";
             echo \View\Loader::make()->render("client_log_page.twig", array(
                 "sp" => \Model\Post::get_all_sp(),
                 "ur" => \Model\Post::ur_bk($name),
                 "name" => $name,
                 "var" => \Model\Post::fees_found($name),
             ));
-            echo "meeeeeeeee";
+            //echo "meeeeeeeee";
         }
         else{
-            echo "Incorrect credentials";
+            echo \View\Loader::make()->render("a.twig", array(
+                "variable" => "Incorrect credentials",
+            ));
         }
     }
 }
