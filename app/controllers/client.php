@@ -6,6 +6,7 @@ class Client{
 public function get() {
         // echo "Hello";
         // echo __DIR__;
+        session_destroy();
         require __DIR__."./../views/templates/client.twig";
     }
     public function post() {

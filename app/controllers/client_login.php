@@ -24,6 +24,10 @@ class Client_log {
             session_start();
             $_SESSION["username"] = $name;
             $_SESSION["role"] = 'user';
+            $_SESSION["logged_cl"] = true;
+            $_SESSION["reg_cl"] = false;
+            $_SESSION["reg_ad"] = false;
+            $_SESSION["logged_ad"] = false;
             //echo "hehehe";
             echo \View\Loader::make()->render("client_log_page.twig", array(
                 "sp" => \Model\Post::get_all_sp(),

@@ -4,10 +4,13 @@ namespace Controller;
 
 class Admin_app{
     public function get(){
-        session_start();
+        //session_start();
+        if($_SESSION["logged_ad"] == true){
         echo \View\Loader::make()->render("admin_reg_app.twig", array(
             "regs" => \Model\Post::get_all_reg(),
         ));
+    }
+    else require __DIR__."./../views/templates/home2.twig";
     }
     public function post(){
          $array = $_POST["admin_reg_app"];

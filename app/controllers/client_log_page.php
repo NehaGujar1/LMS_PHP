@@ -4,13 +4,16 @@ namespace Controller;
 
 class Client_log_pg{
     public function get($name){
-        session_start();
+        //session_start();
+        if($_SESSION["logged_cl"] == true){
         echo \View\Loader::make()->render("client_log_page.twig", array(
             "sp" => \Model\Post::get_all_sp(),
             "ur" => \Model\Post::ur_bk($name),
             "name" => $name,
             "var" => \Model\Post::fees_found($name),
         ));
+    }
+    else require __DIR__."./../views/templates/home2.twig";
     }
     public function post(){
         $bk_name = $_POST["client_log_pg"];

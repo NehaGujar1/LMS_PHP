@@ -4,10 +4,13 @@ namespace Controller;
 
 class Add_books{
     public function get(){
-        session_start();
+        //session_start();
+        if($_SESSION["logged_ad"] == true){
         echo \View\Loader::make()->render("add_books.twig", array(
             "posts" => \Model\Post::get_all(),
         ));
+    }
+    else require __DIR__."./../views/templates/home2.twig";
     }
     public function post(){
         $bk_name = $_POST["add_new_book"];

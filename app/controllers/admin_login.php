@@ -26,6 +26,10 @@ class Admin_log {
             session_start();
             $_SESSION["username"] = $name;
             $_SESSION["role"] = 'admin';
+            $_SESSION["logged_ad"] = true;
+            $_SESSION["reg_cl"] = false;
+            $_SESSION["logged_cl"] = false;
+            $_SESSION["reg_ad"] = false;
             require __DIR__."./../views/templates/admin_log_page.twig" ;
         }
         else{

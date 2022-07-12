@@ -6,10 +6,12 @@ class Client_reg_pg{
     
     public function get($name){
         //session_start();
+        if($_SESSION["reg_cl"] == true){
         echo \View\Loader::make()->render("client_reg_page.twig", array(
             "sp" => \Model\Post::get_all_sp(),
             "name" => $name,
-        ));
+        ));}
+        else require __DIR__."./../views/templates/home2.twig";
     }
     public function post(){
         $bk_name = $_POST["client_reg_pg"];

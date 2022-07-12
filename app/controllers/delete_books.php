@@ -4,10 +4,13 @@ namespace Controller;
 
 class Delete_books{
     public function get(){
-        session_start();
+        //session_start();
+        if($_SESSION["logged_ad"] == true){
         echo \View\Loader::make()->render("delete_books.twig", array(
             "posts" => \Model\Post::get_all(),
         ));
+    }
+    else require __DIR__."./../views/templates/home2.twig";
     }
     public function post(){
          $array = $_POST["delete_books"];

@@ -6,6 +6,7 @@ class Admin{
 public function get() {
         // echo "Hello";
         // echo __DIR__;
+        session_destroy();
         require __DIR__."./../views/templates/admin.twig";
     }
     public function post() {

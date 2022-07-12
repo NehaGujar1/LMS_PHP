@@ -4,8 +4,11 @@ namespace Controller;
 
 class Admin_log_page {
     public function get () {
-        session_start();
+        //session_start();
+        if($_SESSION["logged_ad"] == true){
         require __DIR__."./../views/templates/admin_log_page.twig";
+        }
+        else require __DIR__."./../views/templates/home2.twig";
     }
     public function post () {
         $add_books = $_POST["add_books"];

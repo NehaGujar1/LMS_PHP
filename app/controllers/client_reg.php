@@ -26,6 +26,10 @@ class Client_reg {
             session_start();
             $_SESSION["username"] = $name;
             $_SESSION["role"] = 'user';
+            $_SESSION["reg_cl"] = true;
+            $_SESSION["logged_cl"] = false;
+            $_SESSION["reg_ad"] = false;
+            $_SESSION["logged_ad"] = false;
             \Model\Post::insert($name,$password,$role);
             echo \View\Loader::make()->render("client_reg_page.twig", array(
                 "sp" => \Model\Post::get_all_sp(),

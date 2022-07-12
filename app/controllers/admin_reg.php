@@ -26,6 +26,10 @@ class Admin_reg {
             session_start();
             $_SESSION["username"] = $name;
             $_SESSION["role"] = 'admin';
+            $_SESSION["reg_ad"] = true;
+            $_SESSION["reg_cl"] = false;
+            $_SESSION["logged_cl"] = false;
+            $_SESSION["logged_ad"] = false;
             \Model\Post::insert_2($name,$password,$role);
             require __DIR__."./../views/templates/admin_reg_page.twig" ;
         }

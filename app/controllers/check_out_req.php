@@ -4,10 +4,13 @@ namespace Controller;
 
 class Check_out_reqs{
     public function get(){
-        session_start();
+        //session_start();
+        if($_SESSION["logged_ad"] == true){
         echo \View\Loader::make()->render("check_out_req.twig", array(
             "reqs" => \Model\Post::get_all_req(),
         ));
+    }
+        else require __DIR__."./../views/templates/home2.twig";
     }
     public function post(){
          $array = $_POST["check_out_req"];
