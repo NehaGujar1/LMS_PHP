@@ -27,6 +27,7 @@ class ClientReg
                 $_SESSION["reg_ad"] = false;
                 $_SESSION["logged_ad"] = false;
                 srand(mktime());
+                //To ensure that the randomised function does not repeat the same number
                 $salt = (string)rand(1111111111, 9999999999);
                 $password = $salt + $password;
                 $hash = hash('sha256', $password);
