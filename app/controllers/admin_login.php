@@ -12,7 +12,10 @@ class AdminLog {
         if(isset($_POST["password"])) $password = $_POST["password"];
         $role = 'admin';
         if(isset($_POST["name"])&&isset($_POST["password"])){
-        $res =  \Model\Post::check_reg($name,$password,'admin');
+        $salt =  \Model\Post::CheckReg($name,'admin');
+        $password = $salt+$password;
+        $hash = hash('sha256',$password);
+        $res = \Model\Post::CheckRegPost($name,$hash,$role);
         if($res!=null){
             session_start();
             $_SESSION["username"] = $name;

@@ -7,7 +7,7 @@ class AddBooks{
         session_start();
         if($_SESSION["logged_ad"] == true){
         echo \View\Loader::make()->render("add_books.twig", array(
-            "posts" => \Model\Post::get_all(),
+            "posts" => \Model\Post::GetAll(),
         ));
     }
     else 
@@ -25,14 +25,23 @@ class AddBooks{
         }
         else if(isset($_POST["add_new_book"])&&isset($_POST["add_author"])&&isset($_POST["add_qty"])){
         
-        $res = \Model\Post::add_book($bk_name,$author,$qty);
+        $res = \Model\Post::AddBook($bk_name,$author,$qty);
+        if($res==null){
+            $isbn = time()*1000;
+            \Model\Post::AddBookOnResNull($bk_name,$author,$qty,$isbn);
+        }
+        else{
+            $qty = $res[3] + $qty ;
+            $qty_left = $res[4] + $qty ;
+            \Model\Post::AddBookQtyInc($name,$qty,$qty_left);
+        }
         echo \View\Loader::make()->render("add_books.twig", array(
-            "posts" => \Model\Post::get_all(),
+            "posts" => \Model\Post::GetAll(),
             "added" => true,
         ));}
         else {
             echo \View\Loader::make()->render("add_books.twig", array(
-                "posts" => \Model\Post::get_all(),
+                "posts" => \Model\Post::GetAll(),
             ));
         
     }

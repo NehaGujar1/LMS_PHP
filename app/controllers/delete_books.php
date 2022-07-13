@@ -7,7 +7,7 @@ class DeleteBooks{
         session_start();
         if($_SESSION["logged_ad"] == true){
         echo \View\Loader::make()->render("delete_books.twig", array(
-            "posts" => \Model\Post::get_all(),
+            "posts" => \Model\Post::GetAll(),
         ));
     }
     else require __DIR__."./../views/templates/home2.twig";
@@ -24,7 +24,7 @@ class DeleteBooks{
         $array = $_POST["delete_books"];
         \Model\Post::delete_book($array);
              echo \View\Loader::make()->render("delete_books.twig", array(
-                 "posts" => \Model\Post::get_all(),
+                 "posts" => \Model\Post::GetAll(),
                  "deleted" => true,
              ));
        }

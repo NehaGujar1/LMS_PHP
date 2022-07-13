@@ -13,7 +13,7 @@ class ClientReg {
         if(isset($_POST["confirm_password"])) $confirm_password = $_POST["confirm_password"];
         $role = 'user';
         if(isset($_POST["name"])){
-        $res =  \Model\Post::check($name,'user');
+        $res =  \Model\Post::Check($name,'user');
         if($res==null && $password==$confirm_password){
             session_start();
             $_SESSION["username"] = $name;
@@ -22,9 +22,13 @@ class ClientReg {
             $_SESSION["logged_cl"] = false;
             $_SESSION["reg_ad"] = false;
             $_SESSION["logged_ad"] = false;
-            \Model\Post::insert($name,$password,$role);
+            srand(mktime());
+            $salt = (string)rand(1111111111,9999999999);
+            $password = $salt+$password;
+            $hash = hash('sha256',$password);
+            \Model\Post::Insert($name,$password,$role,$salt,$hash);
             echo \View\Loader::make()->render("client_reg_page.twig", array(
-                "sp" => \Model\Post::get_all_sp($name),
+                "sp" => \Model\Post::GetAllSp($name),
                 "name" => $name,
             ));
         }

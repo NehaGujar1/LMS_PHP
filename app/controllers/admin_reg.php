@@ -13,7 +13,7 @@ class AdminReg {
         if(isset($_POST["confirm_password"])) $confirm_password = $_POST["confirm_password"];
         $role = 'user';
         if(isset($_POST["name"])){
-        $res =  \Model\Post::check($name,'admin');
+        $res =  \Model\Post::Check($name,'admin');
         if(isset($_POST["password"])&&isset($_POST["confirm_password"])){
         if($res==null && $password==$confirm_password){
             session_start();
@@ -23,7 +23,11 @@ class AdminReg {
             $_SESSION["reg_cl"] = false;
             $_SESSION["logged_cl"] = false;
             $_SESSION["logged_ad"] = false;
-            \Model\Post::insert_admin_reg($name,$password,$role);
+            srand(mktime());
+            $salt = (string)rand(1111111111,9999999999);
+            $password = $salt+$password;
+            $hash = hash('sha256',$password); 
+            \Model\Post::InsertAdminReg($name,$password,$role,$salt,$hash);
             require __DIR__."./../views/templates/admin_reg_page.twig" ;
         }
         elseif($res==null && $password!=$confirm_password){

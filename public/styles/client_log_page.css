@@ -1,0 +1,23 @@
+#c3{
+    font-size: 13px;
+      display: grid;
+      justify-content: center;
+  }
+  #c4{
+    font-size: 13px;
+      display: grid;
+      justify-content: center;
+  }
+  .input{
+    font-size: 0px;
+    width:100%;
+  }
+  #c5{
+    font-size:13px;
+  }
+  pre{
+    height: 20vh;
+}
+.ss{
+  font-size:13px;
+}

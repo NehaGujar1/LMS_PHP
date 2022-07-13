@@ -1,0 +1,34 @@
+.input{
+    font-size: 0px;
+    width: 45px;
+}
+#tit{
+    font-size: 13px;
+  }
+  #tit2{
+    font-size: 13px;
+  }
+  #c2{
+    font-size: 13px;
+    align:center;
+    display:grid;
+    justify-content:center;
+    width:100%;
+  }
+  pre{
+    height: 20vh;
+}
+.app{
+  background-color:#6ac75a;
+}
+.app:focus, .app:hover{
+  background-color:#6ac75a;
+  color:#6ac75a;
+}
+.disapp{
+  background-color:#e02626;
+}
+.disapp:focus, .disapp:hover{
+  background-color:#e02626;
+  color:#e02626;
+}

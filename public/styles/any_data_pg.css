@@ -1,0 +1,23 @@
+.input {
+    font-size: 13px;
+}
+#tit{
+    font-size: 13px;
+  }
+  #tit2{
+    font-size: 13px;
+  }
+  pre{
+    height: 20vh;
+}
+#tb{
+  display:grid;
+  justify-content:center;
+}
+#c2{
+  font-size: 13px;
+  align:center;
+  display:grid;
+  justify-content:center;
+  width:100%;
+}

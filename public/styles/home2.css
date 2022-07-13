@@ -1,0 +1,12 @@
+.c1{
+    display: grid;
+    column-gap: 4px;
+    justify-content: center;
+    grid-auto-flow: column;
+}
+.input{
+    font-size: 13px;
+}
+pre{
+    height: 40vh;
+}

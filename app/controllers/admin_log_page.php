@@ -19,23 +19,23 @@ class AdminLogPage {
         }
         else if(isset($_POST["add_books"])) {
             echo \View\Loader::make()->render("add_books.twig", array(
-                     "posts" => \Model\Post::get_all(),
+                     "posts" => \Model\Post::GetAll(),
                  ));
         }
         else if(isset($_POST["delete_books"])) {
             
             echo \View\Loader::make()->render("delete_books.twig", array(
-                "posts" => \Model\Post::get_all(),
+                "posts" => \Model\Post::GetAll(),
             ));
         }
         else if(isset($_POST["check_out_req"])) {
             echo \View\Loader::make()->render("check_out_req.twig", array(
-                "reqs" => \Model\Post::get_all_req(),
+                "reqs" => \Model\Post::GetAllReq(),
             ));
         }
         else if(isset($_POST["admin_reg_app"])) {
             echo \View\Loader::make()->render("admin_reg_app.twig", array(
-                "regs" => \Model\Post::get_all_reg(),
+                "regs" => \Model\Post::GetAllReg(),
             ));
         }
     }

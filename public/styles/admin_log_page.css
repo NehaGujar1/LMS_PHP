@@ -1,0 +1,14 @@
+.c1{
+    /* display: grid; */
+    column-gap: 4px;
+    /* justify-content: center; */
+    grid-auto-flow: column;
+    grid-template-columns: auto,auto;
+    grid-template-rows: auto,auto,auto;
+}
+.input{
+    font-size: 13px;
+}
+pre{
+    height: 30vh;
+}

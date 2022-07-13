@@ -1,0 +1,23 @@
+.input{
+font-size: 13px;
+width:100%;
+}
+#tit{
+    font-size: 13px;
+  }
+  #tit2{
+    font-size: 13px;
+  }
+  #c2{
+    font-size: 13px;
+    align:center;
+    position:center;
+    width: 200px;
+  }
+  .input .app {
+    content:"Approve";
+    font-size: 13px;
+  }
+  pre{
+    height: 15vh;
+}

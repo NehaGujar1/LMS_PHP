@@ -7,7 +7,7 @@ class AdminApp{
         session_start();
         if($_SESSION["logged_ad"] == true){
         echo \View\Loader::make()->render("admin_reg_app.twig", array(
-            "regs" => \Model\Post::get_all_reg(),
+            "regs" => \Model\Post::GetAllReg(),
         ));
     }
     else require __DIR__."./../views/templates/home2.twig";
@@ -22,17 +22,17 @@ class AdminApp{
        else {
         if(isset($_POST["admin_reg_app"])) {
             $array = $_POST["admin_reg_app"];
-        \Model\Post::reg_approval($array);
+        \Model\Post::RegApproval($array);
              echo \View\Loader::make()->render("admin_reg_app.twig", array(
-                 "regs" => \Model\Post::get_all_reg(),
+                 "regs" => \Model\Post::GetAllReg(),
                  "approved" => true,
              ));
        }
        if(isset($_POST["admin_reg_app_d"])){
         $array3 = $_POST["admin_reg_app_d"];
-        \Model\Post::reg_disapproval($array3);
+        \Model\Post::RegDisapproval($array3);
              echo \View\Loader::make()->render("admin_reg_app.twig", array(
-                 "regs" => \Model\Post::get_all_reg(),
+                 "regs" => \Model\Post::GetAllReg(),
                  "disapproved" => true,
              ));
        }

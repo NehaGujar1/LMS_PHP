@@ -8,7 +8,7 @@ class ClientRegPg{
         session_start();
         if($_SESSION["reg_cl"] == true){
         echo \View\Loader::make()->render("client_reg_page.twig", array(
-            "sp" => \Model\Post::get_all_sp($name),
+            "sp" => \Model\Post::GetAllSp($name),
             "name" => $name,
         ));}
         else require __DIR__."./../views/templates/home2.twig";
@@ -27,9 +27,9 @@ class ClientRegPg{
         $str_arr = explode (",--", $bk_name); 
         $name = $str_arr[1];
         $isbn = $str_arr[0];
-        $res = \Model\Post::check_r_c($name,$isbn);
+        $res = \Model\Post::CheckRC($name,$isbn);
         echo \View\Loader::make()->render("client_reg_page.twig", array(
-            "sp" => \Model\Post::get_all_sp($name),
+            "sp" => \Model\Post::GetAllSp($name),
             "name" => $name,
             "sent" => true,
         ));

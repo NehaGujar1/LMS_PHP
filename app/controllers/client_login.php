@@ -10,9 +10,12 @@ class ClientLog {
     public function post() {
         if(isset($_POST["name"]))$name = $_POST["name"];
         if(isset($_POST["password"]))$password = $_POST["password"];
-        $role = 'client';
+        $role = 'user';
         if(isset($_POST["password"])&&isset($_POST["name"])){
-        $res =  \Model\Post::check_reg($name,$password,'user');
+        $salt =  \Model\Post::CheckReg($name,'user');
+        $password = $salt+$password;
+        $hash = hash('sha256',$password);
+        $res = \Model\Post::CheckRegPost($name,$hash,$role);
         if($res!=null){
             session_start();
             $_SESSION["username"] = $name;
@@ -22,10 +25,10 @@ class ClientLog {
             $_SESSION["reg_ad"] = false;
             $_SESSION["logged_ad"] = false;
             echo \View\Loader::make()->render("client_log_page.twig", array(
-                "sp" => \Model\Post::get_all_sp($name),
-                "ur" => \Model\Post::ur_bk($name),
+                "sp" => \Model\Post::GetAllSp($name),
+                "ur" => \Model\Post::UrBk($name),
                 "name" => $name,
-                "var" => \Model\Post::fees_found($name),
+                "var" => \Model\Post::FeesFound($name),
             ));
         }
         else{

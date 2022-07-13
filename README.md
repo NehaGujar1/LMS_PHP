@@ -17,7 +17,7 @@
     > composer install
     > composer dump-autoload
     ```
-
+Here there are some steps which can be alternatively be performed by using setup_shellscript.sh
 1. Copy `config/sample.config.php` as `config/config.php` and edit it accordingly:
     ```console
     > cp config/sample.config.php config/config.php
