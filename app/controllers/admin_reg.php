@@ -2,55 +2,59 @@
 
 namespace Controller;
 
-class AdminReg {
-    public function get() {
+class AdminReg
+{
+    public function get()
+    {
         session_destroy();
-        require __DIR__."./../views/templates/admin_reg.twig";
+        require __DIR__ . "./../views/templates/admin_reg.twig";
     }
-    public function post() {
-        if(isset($_POST["name"])) $name = $_POST["name"];
-        if(isset($_POST["password"])) $password = $_POST["password"];
-        if(isset($_POST["confirm_password"])) $confirm_password = $_POST["confirm_password"];
+
+    public function post()
+    {
+        if (isset($_POST["name"])) $name = $_POST["name"];
+        if (isset($_POST["password"])) $password = $_POST["password"];
+        if (isset($_POST["confirm_password"])) $confirm_password = $_POST["confirm_password"];
         $role = 'user';
-        if(isset($_POST["name"])){
-        $res =  \Model\Post::Check($name,'admin');
-        if(isset($_POST["password"])&&isset($_POST["confirm_password"])){
-        if($res==null && $password==$confirm_password){
-            session_start();
-            $_SESSION["username"] = $name;
-            $_SESSION["role"] = 'admin';
-            $_SESSION["reg_ad"] = true;
-            $_SESSION["reg_cl"] = false;
-            $_SESSION["logged_cl"] = false;
-            $_SESSION["logged_ad"] = false;
-            srand(mktime());
-            $salt = (string)rand(1111111111,9999999999);
-            $password = $salt+$password;
-            $hash = hash('sha256',$password); 
-            \Model\Post::InsertAdminReg($name,$password,$role,$salt,$hash);
-            require __DIR__."./../views/templates/admin_reg_page.twig" ;
-        }
-        elseif($res==null && $password!=$confirm_password){
+        if (isset($_POST["name"])) {
+            $res =  \Model\Post::check($name, 'admin');
+            if (isset($_POST["password"]) && isset($_POST["confirm_password"])) {
+                if ($res == null && $password == $confirm_password) {
+                    session_start();
+                    $_SESSION["username"] = $name;
+                    $_SESSION["role"] = 'admin';
+                    $_SESSION["reg_ad"] = true;
+                    $_SESSION["reg_cl"] = false;
+                    $_SESSION["logged_cl"] = false;
+                    $_SESSION["logged_ad"] = false;
+                    srand(mktime());
+                    $salt = (string)rand(1111111111, 9999999999);
+                    $password = $salt + $password;
+                    $hash = hash('sha256', $password);
+                    \Model\Post::insertAdminReg($name, $password, $role, $salt, $hash);
+                    require __DIR__ . "./../views/templates/admin_reg_page.twig";
+                } 
+                elseif ($res == null && $password != $confirm_password) {
+                    echo \View\Loader::make()->render("any_data_pg.twig", array(
+                        "variable" => "Passwords don't match",
+                    ));
+                } 
+                else {
+                    echo \View\Loader::make()->render("any_data_pg.twig", array(
+                        "variable" => "Already registered",
+                    ));
+                }
+            } 
+            else {
+                echo \View\Loader::make()->render("any_data_pg.twig", array(
+                    "variable" => "Incorrect credentials",
+                ));
+            }
+        } 
+        else {
             echo \View\Loader::make()->render("any_data_pg.twig", array(
-                "variable" => "Passwords don't match",
+                "variable" => "Incorrect credentials",
             ));
         }
-        else{
-            echo \View\Loader::make()->render("any_data_pg.twig", array(
-                "variable" => "Already registered",
-            ));
-        }
-    }
-    else{
-        echo \View\Loader::make()->render("any_data_pg.twig", array(
-            "variable" => "Incorrect credentials",
-        ));
-    }
-    }
-    else{
-        echo \View\Loader::make()->render("any_data_pg.twig", array(
-            "variable" => "Incorrect credentials",
-        ));
-    }
     }
 }

@@ -2,45 +2,51 @@
 
 namespace Controller;
 
-class CheckOutReqs{
-    public function get(){
+class CheckOutReqs
+{
+    public function get()
+    {
         session_start();
-        if($_SESSION["logged_ad"] == true){
-        echo \View\Loader::make()->render("check_out_req.twig", array(
-            "reqs" => \Model\Post::GetAllReq(),
-        ));
+        if ($_SESSION["logged_ad"] == true) {
+            echo \View\Loader::make()->render("check_out_req.twig", array(
+                "reqs" => \Model\Post::getAllReq(),
+            ));
+        } else
+            require __DIR__ . "./../views/templates/home2.twig";
     }
-        else 
-        require __DIR__."./../views/templates/home2.twig";
-    }
-    public function post(){
+
+    public function post()
+    {
         session_start();
-       if(isset($_POST["end"])){
-           $_SESSION["logged_ad"] = true;
+        if (isset($_POST["end"])) {
+            $_SESSION["logged_ad"] = true;
             header("Location: /admin_log_page");
             exit();
-       }
-       else if(isset($_POST["check_out_req"])){
-        $array = $_POST["check_out_req"];
-           $str_arr = explode (",--", $array); 
-           $name = $str_arr[1];
-           $array = $str_arr[0];
-        \Model\Post::CheckReq($array,$name);
-             echo \View\Loader::make()->render("check_out_req.twig", array(
-                 "reqs" => \Model\Post::GetAllReq(),
-                 "approved" => true,
-             ));
-       }
-       else if(isset($_POST["check_out_req_d"])){
-        $array3 = $_POST["check_out_req_d"];
-        $str_arr = explode (",--", $array3); 
-        $name = $str_arr[1];
-        $array3 = $str_arr[0];
-     \Model\Post::CheckReqD($array3,$name);
-          echo \View\Loader::make()->render("check_out_req.twig", array(
-              "reqs" => \Model\Post::GetAllReq(),
-              "disapproved" => true,
-          ));
-    }
+        } 
+        else if (isset($_POST["check_out_req"])) {
+            $temp = $_POST["check_out_req"];
+            $str_arr = explode(",--", $temp);
+            $name = $str_arr[1];
+            $isbn = $str_arr[0];
+            $time = time();
+            \Model\Post::checkReq($isbn, $name, $time);
+            echo \View\Loader::make()->render("check_out_req.twig", array(
+                "reqs" => \Model\Post::getAllReq(),
+                "approved" => true,
+            ));
+        } 
+        else if (isset($_POST["check_out_req_d"])) {
+            $temp = $_POST["check_out_req_d"];
+            $str_arr = explode(",--", $temp);
+            $name = $str_arr[1];
+            $isbn = $str_arr[0];
+            $res = \Model\Post::checkReqD($isbn, $name);
+            $qty_left = $res[4] + 1;
+            \Model\Post::checkReqDPost($isbn, $qty_left);
+            echo \View\Loader::make()->render("check_out_req.twig", array(
+                "reqs" => \Model\Post::getAllReq(),
+                "disapproved" => true,
+            ));
+        }
     }
 }

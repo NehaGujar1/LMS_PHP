@@ -5,5 +5,3 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule . /index.php [L]
 </IfModule>
-SetEnv HTTP_range_start 1111111111
-SetEnv HTTP_range_end 9999999999
