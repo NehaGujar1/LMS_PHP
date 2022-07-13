@@ -2,9 +2,9 @@
 
 namespace Controller;
 
-class Admin_app{
+class AdminApp{
     public function get(){
-        //session_start();
+        session_start();
         if($_SESSION["logged_ad"] == true){
         echo \View\Loader::make()->render("admin_reg_app.twig", array(
             "regs" => \Model\Post::get_all_reg(),
@@ -13,47 +13,28 @@ class Admin_app{
     else require __DIR__."./../views/templates/home2.twig";
     }
     public function post(){
-         $array = $_POST["admin_reg_app"];
-         $array2 = $_POST["end"];
-         $array3 = $_POST["admin_reg_app_d"];
-        //echo $array;
-    //    echo var_dump($array);
-    //    if(isset($_POST['delete_book'])){
- 
-    //     // Count total files
-    //     $countfiles = count($_FILES['name']);
-    //    }
-    //    for($i=0;$i<$countfiles;$i++){
-    //        $del = \Model\Post::del()
-    //    }
-    //echo "Q1";
-       if($array2!=null){
-           require __DIR__."./../views/templates/admin_log_page.twig";
+        session_start();
+       if(isset($_POST["end"])){
+           $_SESSION["logged_ad"] = true;
+            header("Location: /admin_log_page");
+            exit();
        }
-       else if($array!=null || $array3!=null){
-           //echo "Q2";
-        //    $str_arr = explode (",--", $array); 
-        //    $name = $str_arr[1];
-        //    $array = $str_arr[0];
-        if($array!=null){
+       else {
+        if(isset($_POST["admin_reg_app"])) {
+            $array = $_POST["admin_reg_app"];
         \Model\Post::reg_approval($array);
-           //echo "Q3";
              echo \View\Loader::make()->render("admin_reg_app.twig", array(
-                 //echo "E1";
                  "regs" => \Model\Post::get_all_reg(),
                  "approved" => true,
              ));
-             //echo "Q4";
        }
-       if($array3!=null){
+       if(isset($_POST["admin_reg_app_d"])){
+        $array3 = $_POST["admin_reg_app_d"];
         \Model\Post::reg_disapproval($array3);
-           //echo "Q3";
              echo \View\Loader::make()->render("admin_reg_app.twig", array(
-                 //echo "E1";
                  "regs" => \Model\Post::get_all_reg(),
                  "disapproved" => true,
              ));
-             //echo "Q4";
        }
     }
     }

@@ -2,24 +2,17 @@
 
 namespace Controller;
 
-class Client_log {
+class ClientLog {
     public function get() {
         session_destroy();
-        // echo "Hello";
-        // echo __DIR__;
         require __DIR__."./../views/templates/client_log.twig";
     }
     public function post() {
-        //echo "hii";
-        $name = $_POST["name"];
-        $password = $_POST["password"];
+        if(isset($_POST["name"]))$name = $_POST["name"];
+        if(isset($_POST["password"]))$password = $_POST["password"];
         $role = 'client';
-        // echo \View\Loader::make()->render("templates/post.twig", array(
-        //     "post" => \Model\Post::find($id),
-        // ));
-        //echo "hello";
-        $res =  \Model\Post::check_2($name,$password,'user');
-        //echo "hih";
+        if(isset($_POST["password"])&&isset($_POST["name"])){
+        $res =  \Model\Post::check_reg($name,$password,'user');
         if($res!=null){
             session_start();
             $_SESSION["username"] = $name;
@@ -28,19 +21,23 @@ class Client_log {
             $_SESSION["reg_cl"] = false;
             $_SESSION["reg_ad"] = false;
             $_SESSION["logged_ad"] = false;
-            //echo "hehehe";
             echo \View\Loader::make()->render("client_log_page.twig", array(
-                "sp" => \Model\Post::get_all_sp(),
+                "sp" => \Model\Post::get_all_sp($name),
                 "ur" => \Model\Post::ur_bk($name),
                 "name" => $name,
                 "var" => \Model\Post::fees_found($name),
             ));
-            //echo "meeeeeeeee";
         }
         else{
-            echo \View\Loader::make()->render("a.twig", array(
+            echo \View\Loader::make()->render("any_data_pg.twig", array(
                 "variable" => "Incorrect credentials",
             ));
         }
+    }
+    else{
+        echo \View\Loader::make()->render("any_data_pg.twig", array(
+            "variable" => "Incorrect credentials",
+        ));
+    }
     }
 }

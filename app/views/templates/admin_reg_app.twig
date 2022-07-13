@@ -47,8 +47,10 @@ h1,p{
 }
 #c2{
   font-size: 13px;
-  width:200px;
-  position:center;
+  align:center;
+  display:grid;
+  justify-content:center;
+  width:100%;
 }
 .input:hover,
 .input:focus {
@@ -72,10 +74,24 @@ h1,p{
 pre{
     height: 20vh;
 }
+.app{
+  background-color:#6ac75a;
+}
+.app:focus, .app:hover{
+  background-color:#6ac75a;
+  color:#6ac75a;
+}
+.disapp{
+  background-color:#e02626;
+}
+.disapp:focus, .disapp:hover{
+  background-color:#e02626;
+  color:#e02626;
+}
 </style>
 </head>
 <pre> </pre>
-<h1>Check out requests</h1>
+<h1>Admin registration approval</h1>
 <hr>
 <form action="/admin_reg_app" method="post"  class="c1">
 <table>

@@ -3,38 +3,14 @@
 namespace Model;
 
 class Post {
-    // public static function create($caption) {
-    //     $db = \DB::get_instance();
-    //     $stmt = $db->prepare("INSERT INTO posts (caption) VALUES (?)");
-    //     $stmt->execute([$caption]);
-    // }
-
-    // public static function get_all() {
-    //     $db = \DB::get_instance();
-    //     $stmt = $db->prepare("SELECT * FROM posts");
-    //     $stmt->execute();
-    //     $rows = $stmt->fetchAll();
-    //     return $rows;
-    // }
-
-    // public static function find($id) {
-    //     $db = \DB::get_instance();
-    //     $stmt = $db->prepare("SELECT * FROM posts WHERE id = ?");
-    //     $stmt->execute([$id]);
-    //     $row = $stmt->fetch();
-    //     return $row;
-    // }
-    public static function check_2($name,$password,$role) {
+    
+    public static function check_reg($name,$password,$role) {
+        //To check whether he/she is registered or not
         $db = \DB::get_instance();
         $stmt = $db->prepare("SELECT * from client_admin WHERE role = ? AND name = ?");
-        // echo "hi";
         $stmt->execute([$role,$name]);
         $result = $stmt->fetch();
-        // echo "hi2";
-        //print_r($result);
         $vart = $result[2];
-        // echo $vart;
-        // echo "hi3";
         $salt = $vart;
         $password = $salt+$password;
         $hash = hash('sha256',$password);
@@ -44,6 +20,7 @@ class Post {
         return $final;
     }
     public static function check($name,$role) {
+        //Pre-registration check to ensure unique username
         $db = \DB::get_instance();
         $stmt = $db->prepare("SELECT * from client_admin WHERE role = ? AND name = ?");
         $stmt->execute([$role,$name]);
@@ -52,41 +29,22 @@ class Post {
     }
     
     public static function insert($name,$password,$role) {
+        srand(mktime());
         $salt = (string)rand(1111111111,9999999999);
         $password = $salt+$password;
-                    //$hash = crypt.createHash('sha256').update(password).digest('base64');
-        //$hash = "SHA-256: ".crypt($password);
         $hash = hash('sha256',$password);
         $db = \DB::get_instance();
-        // $stmt = $db->prepare("INSERT INTO client_admin (name, hash, salt, role) VALUES(?,?,?,?)");
-        // $stmt->execute([$name],[$hash],[$salt],[$role]);
         $stmt = $db->prepare("INSERT INTO client_admin (name, hash, salt, role) VALUES(?,?,?,?)");
         $stmt->execute([$name,$hash,$salt,$role]);
         $stmt = $db->prepare("INSERT INTO total_amt (name,fees) VALUES(?,?)");
         $stmt->execute([$name,0]);
-        // $stmt = $db->prepare("INSERT INTO client_admin (name) VALUES (?)");
-        // $stmt->execute([$name]);            
-        // $stmt = $db->prepare("INSERT INTO client_admin (name) VALUES (?)");
-        // $stmt->execute([$name]);
-        // $stmt = $db->prepare("UPDATE client_admin SET hash = ? WHERE name = $name");
-        // $stmt->execute([$hash]);
-        // $stmt = $db->prepare("UPDATE client_admin SET salt = ? WHERE name = $name");
-        // $stmt->execute([$salt]);
-        // $stmt = $db->prepare("UPDATE client_admin SET role = ? WHERE name = $name");
-        // $stmt->execute([$role]);
-        // $result = $stmt->fetch();
-        // echo $result;
-        // return $result;
     }
-public static function insert_2($name,$password,$role) {
+public static function insert_admin_reg($name,$password,$role) {
+    srand(mktime());
     $salt = (string)rand(1111111111,9999999999);
     $password = $salt+$password;
-                //$hash = crypt.createHash('sha256').update(password).digest('base64');
-    //$hash = "SHA-256: ".crypt($password);
     $hash = hash('sha256',$password);
     $db = \DB::get_instance();
-    // $stmt = $db->prepare("INSERT INTO client_admin (name, hash, salt, role) VALUES(?,?,?,?)");
-    // $stmt->execute([$name],[$hash],[$salt],[$role]);
     $stmt = $db->prepare("INSERT INTO admin_registration (name, hash, salt) VALUES(?,?,?)");
         $stmt->execute([$name,$hash,$salt]);
     }
@@ -100,7 +58,6 @@ public static function insert_2($name,$password,$role) {
     public static function get_all_req(){
         $db = \DB::get_instance();
         $stmt = $db->prepare("SELECT requests.*,books.book_name from requests inner join books on books.isbn = requests.isbn");
-        //Delete the other requests??
         $stmt->execute();
         $rows = $stmt->fetchAll();
         return $rows;
@@ -112,10 +69,10 @@ public static function insert_2($name,$password,$role) {
         $rows = $stmt->fetchAll();
         return $rows;
     }
-    public static function get_all_sp(){
+    public static function get_all_sp($name){
         $db = \DB::get_instance();
-        $stmt = $db->prepare("SELECT * FROM books where qty_left>0");
-        $stmt->execute();
+        $stmt = $db->prepare("SELECT * FROM books where qty_left>0 AND isbn NOT IN (SELECT isbn from books_user where name = ? union all select isbn from requests where name = ? )");
+        $stmt->execute([$name,$name]);
         $rows = $stmt->fetchAll();
         return $rows;
     }
@@ -206,16 +163,11 @@ public static function insert_2($name,$password,$role) {
     }
     public static function check_r_c($name,$isbn) {
         $db = \DB::get_instance();
-        //echo $name;
-        //echo $isbn;
         $stmt = $db->prepare("INSERT INTO requests (name, isbn) VALUES(?,?)");
         $stmt->execute([$name,$isbn]);
         $stmt3 = $db->prepare("SELECT * FROM books WHERE isbn = ?");
         $stmt3->execute([$isbn]);
         $res = $stmt3->fetch();
-        //echo $res;
-        // echo $res[4];
-        // echo "hi";
         $temp2 = $res[4] - 1;
         $stmt2 = $db->prepare("UPDATE books SET qty_left = ? WHERE isbn = ?");
         $stmt2->execute([$temp2,$isbn]);
@@ -225,13 +177,8 @@ public static function insert_2($name,$password,$role) {
         $stmt = $db->prepare("SELECT books.* from books inner join books_user on books_user.isbn = books.isbn where books_user.name = ?");
         $stmt->execute([$name]);
         $rows = $stmt->fetchAll();
-        //echo $rows[0];
         $var = time();
         return $rows;
-        // $stmt = $db->prepare("SELECT * FROM books where qty_left>0");
-        // $stmt->execute();
-        // $rows = $stmt->fetchAll();
-        // return $rows;
     }
     public static function ur_bk_dlt($name,$isbn) {
         $db = \DB::get_instance();
@@ -240,49 +187,33 @@ public static function insert_2($name,$password,$role) {
         $stmt3 = $db->prepare("SELECT * FROM books WHERE isbn = ?");
         $stmt3->execute([$isbn]);
         $res = $stmt3->fetch();
-        //echo $res;
-        //echo $res[4];
-        //echo "hi";
         $temp2 = $res[4] + 1;
         $stmt2 = $db->prepare("UPDATE books SET qty_left = ? WHERE isbn = ?");
         $stmt2->execute([$temp2,$isbn]);
         $var = time();
-        //echo $var;
-        //echo "vvv";
         $fees = 0;
         $stmt2 = $db->prepare("SELECT * FROM fees WHERE isbn = ? AND name = ?");
         $stmt2->execute([$isbn,$name]);
-        //echo $stmt2;
         $res = $stmt2->fetch();
         $diff = $var - $res[2];
-        //echo $res[2];
         if($diff>604800){
             $fees = (int)(($diff -604800)/86400) ;
             //Every day charge is 1 Rs
         }
-        //echo $fees;
         $stmt2 = $db->prepare("UPDATE fees SET out_time = ?, fees = ? WHERE isbn = ? AND name = ?");
         $stmt2->execute([$var,$fees,$isbn,$name]);
-        //echo "jjj";
         $stmt2 = $db->prepare("SELECT * FROM total_amt WHERE name = ?");
         $stmt2->execute([$name]);
-        //echo "kkk";
         $res = $stmt2->fetch();
         $temp = $res[1] + $fees ;
         $stmt2 = $db->prepare("UPDATE total_amt SET fees = ? WHERE name = ?");
         $stmt2->execute([$temp,$name]);
-        //echo "ttt";
     }
     public static function fees_found($name){
         $db = \DB::get_instance();
-        //echo "yuugtg";
         $stmt3 = $db->prepare("SELECT fees FROM total_amt WHERE name = ?");
         $stmt3->execute([$name]);
         $res = $stmt3->fetch();
-        //echo $res;
-        //echo(var_dump($res));
-        //echo $res[1];
-        //echo "hm";
         return $res;
     }
 }

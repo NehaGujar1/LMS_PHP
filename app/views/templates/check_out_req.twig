@@ -73,6 +73,27 @@ h1,p{
 pre{
     height: 15vh;
 }
+.app{
+  background-color:#6ac75a;
+}
+.app:focus, .app:hover{
+  background-color:#6ac75a;
+  color:#6ac75a;
+}
+.disapp{
+  background-color:#e02626;
+}
+.disapp:focus, .disapp:hover{
+  background-color:#e02626;
+  color:#e02626;
+}
+#c2{
+  font-size: 13px;
+  align:center;
+  display:grid;
+  justify-content:center;
+  width:100%;
+}
 </style>
 </head>
 <pre> </pre>
@@ -93,8 +114,8 @@ pre{
   <tr>
     <td>{{post.name}}</td>
     <td>{{post.book_name}}</td>
-    <td><input type="submit" class="input" name="check_out_req" value="{{post.isbn}},--{{post.name}}"></input></td>
-    <td><input type="submit"  class="input" name="check_out_req_d" value="{{post.isbn}},--{{post.name}}"></input></td>
+    <td><input type="submit" class="input app" name="check_out_req" value="{{post.isbn}},--{{post.name}}"></input></td>
+    <td><input type="submit"  class="input disapp" name="check_out_req_d" value="{{post.isbn}},--{{post.name}}"></input></td>
   </tr>
   {% endfor %}
   </tbody>

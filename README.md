@@ -26,8 +26,8 @@
 
 1. Import schema present in `schema/schema.sql` in your database.
 
-1. Serve the public folder at any port (say 8000):
+1. Serve the public folder at any port (say 8001):
     ```console
 	> cd public
-    > php -S localhost:8000
+    > php -S localhost:8001
     ```

@@ -2,27 +2,19 @@
 
 namespace Controller;
 
-class Client_reg {
+class ClientReg {
     public function get() {
-        // echo "Hello";
-        // echo __DIR__;
         session_destroy();
         require __DIR__."./../views/templates/client_reg.twig";
     }
     public function post() {
-        //echo "hii";
-        $name = $_POST["name"];
-        $password = $_POST["password"];
-        $confirm_password = $_POST["confirm_password"];
+        if(isset($_POST["name"])) $name = $_POST["name"];
+        if(isset($_POST["password"])) $password = $_POST["password"];
+        if(isset($_POST["confirm_password"])) $confirm_password = $_POST["confirm_password"];
         $role = 'user';
-        // echo \View\Loader::make()->render("templates/post.twig", array(
-        //     "post" => \Model\Post::find($id),
-        // ));
-        //echo "hello";
+        if(isset($_POST["name"])){
         $res =  \Model\Post::check($name,'user');
-        //echo "hihihi";
         if($res==null && $password==$confirm_password){
-            //echo "blahblahblah";
             session_start();
             $_SESSION["username"] = $name;
             $_SESSION["role"] = 'user';
@@ -32,19 +24,19 @@ class Client_reg {
             $_SESSION["logged_ad"] = false;
             \Model\Post::insert($name,$password,$role);
             echo \View\Loader::make()->render("client_reg_page.twig", array(
-                "sp" => \Model\Post::get_all_sp(),
+                "sp" => \Model\Post::get_all_sp($name),
                 "name" => $name,
             ));
         }
         elseif($res==null && $password!=$confirm_password){
-            echo \View\Loader::make()->render("a.twig", array(
+            echo \View\Loader::make()->render("any_data_pg.twig", array(
                 "variable" => "Passwords don't match",
             ));
         }
         else{
-            echo \View\Loader::make()->render("a.twig", array(
+            echo \View\Loader::make()->render("any_data_pg.twig", array(
                 "variable" => "Already registered",
             ));
         }
-    }
+    }}
 }

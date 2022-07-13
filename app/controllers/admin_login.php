@@ -2,27 +2,18 @@
 
 namespace Controller;
 
-class Admin_log {
+class AdminLog {
     public function get() {
-        // echo "Hello";
-        // echo __DIR__;
         session_destroy();
         require __DIR__."./../views/templates/admin_log.twig";
     }
     public function post() {
-        //echo "hii";
-         
-        $name = $_POST["name"];
-        $password = $_POST["password"];
+        if(isset($_POST["name"])) $name = $_POST["name"];
+        if(isset($_POST["password"])) $password = $_POST["password"];
         $role = 'admin';
-        // echo \View\Loader::make()->render("templates/post.twig", array(
-        //     "post" => \Model\Post::find($id),
-        // ));
-        //echo "hello";
-        $res =  \Model\Post::check_2($name,$password,'admin');
-        //echo "hih";
+        if(isset($_POST["name"])&&isset($_POST["password"])){
+        $res =  \Model\Post::check_reg($name,$password,'admin');
         if($res!=null){
-            //echo "hehehe";
             session_start();
             $_SESSION["username"] = $name;
             $_SESSION["role"] = 'admin';
@@ -30,12 +21,19 @@ class Admin_log {
             $_SESSION["reg_cl"] = false;
             $_SESSION["logged_cl"] = false;
             $_SESSION["reg_ad"] = false;
-            require __DIR__."./../views/templates/admin_log_page.twig" ;
+            header("Location: /admin_log_page");
+            exit();
         }
         else{
-            echo \View\Loader::make()->render("a.twig", array(
+            echo \View\Loader::make()->render("any_data_pg.twig", array(
                 "variable" => "Incorrect credentials",
             ));
         }
+    }
+    else{
+        echo \View\Loader::make()->render("any_data_pg.twig", array(
+            "variable" => "Incorrect credentials",
+        ));
+    }
     }
 }
