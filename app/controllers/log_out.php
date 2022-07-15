@@ -8,8 +8,6 @@ class LogOut
     {
         session_destroy();
         require __DIR__ . "./../views/templates/log_out.twig";
-        // header("Location: /log_out");
-        //     exit();
     }
     
     public static function post()

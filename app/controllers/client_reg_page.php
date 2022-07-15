@@ -31,9 +31,9 @@ class ClientRegPg
             $str_arr = explode(",--", $bk_name);
             $name = $str_arr[1];
             $isbn = $str_arr[0];
-            $res = \Model\Post::checkRC($name, $isbn);
-            $qty_left = $res[4] - 1;
-            \Model\Post::checkRCPost($qty_left, $isbn);
+            $res = \Model\Post::addCheckOutReq($name, $isbn);
+            $qty_left = $res - 1;
+            \Model\Post::decQtyOnCheckOutReq($qty_left, $isbn);
             echo \View\Loader::make()->render("client_reg_page.twig", array(
                 "sp" => \Model\Post::getAllSp($name),
                 "name" => $name,

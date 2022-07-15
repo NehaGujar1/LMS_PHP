@@ -41,8 +41,8 @@ class CheckOutReqs
             $name = $str_arr[1];
             $isbn = $str_arr[0];
             $res = \Model\Post::checkReqD($isbn, $name);
-            $qty_left = $res[4] + 1;
-            \Model\Post::checkReqDPost($isbn, $qty_left);
+            $qty_left = $res + 1;
+            \Model\Post::checkReqDUpdateQty($isbn, $qty_left);
             echo \View\Loader::make()->render("check_out_req.twig", array(
                 "reqs" => \Model\Post::getAllReq(),
                 "disapproved" => true,

@@ -5,32 +5,36 @@ namespace Model;
 class Post
 {
 
+    //* is changed to salt
     public static function checkReg($name, $role)
     {
         //To check whether he/she is registered or not
         $db = \DB::get_instance();
-        $stmt = $db->prepare("SELECT * from client_admin WHERE role = ? AND name = ?");
+        $stmt = $db->prepare("SELECT salt from client_admin WHERE role = ? AND name = ?");
         $stmt->execute([$role, $name]);
         $result = $stmt->fetch();
-        $vart = $result[2];
-        $salt = $vart;
+        // $vart = $result;
+        $salt = $result[0];
+        echo $salt;
         return $salt;
     }
 
+    //* is chnaged to name
     public static function checkRegPost($name, $hash, $role)
     {
         $db = \DB::get_instance();
-        $stmt = $db->prepare("SELECT * from client_admin WHERE role = ? AND name = ? AND hash = ?");
+        $stmt = $db->prepare("SELECT name from client_admin WHERE role = ? AND name = ? AND hash = ?");
         $stmt->execute([$role, $name, $hash]);
         $final = $stmt->fetch();
         return $final;
     }
 
+    //* is chnaged to name
     public static function check($name, $role)
     {
         //Pre-registration check to ensure unique username
         $db = \DB::get_instance();
-        $stmt = $db->prepare("SELECT * from client_admin WHERE role = ? AND name = ?");
+        $stmt = $db->prepare("SELECT name from client_admin WHERE role = ? AND name = ?");
         $stmt->execute([$role, $name]);
         $result = $stmt->fetch();
         return $result;
@@ -52,47 +56,52 @@ class Post
         $stmt->execute([$name, $hash, $salt]);
     }
 
+    //* chnaged to book_name,isbn,author
     public static function getAll()
     {
         $db = \DB::get_instance();
-        $stmt = $db->prepare("SELECT * FROM books");
+        $stmt = $db->prepare("SELECT book_name, isbn, author FROM books");
         $stmt->execute();
         $rows = $stmt->fetchAll();
         return $rows;
     }
 
+    //* chnaged to req.name, req.isbn
     public static function getAllReq()
     {
         $db = \DB::get_instance();
-        $stmt = $db->prepare("SELECT requests.*,books.book_name from requests inner join books on books.isbn = requests.isbn");
+        $stmt = $db->prepare("SELECT requests.name, requests.isbn, books.book_name from requests inner join books on books.isbn = requests.isbn");
         $stmt->execute();
         $rows = $stmt->fetchAll();
         return $rows;
     }
 
+    //* to name
     public static function getAllReg()
     {
         $db = \DB::get_instance();
-        $stmt = $db->prepare("SELECT * FROM admin_registration");
+        $stmt = $db->prepare("SELECT name FROM admin_registration");
         $stmt->execute();
         $rows = $stmt->fetchAll();
         return $rows;
     }
 
+    //* to book name author
     public static function getAllSp($name)
     {
         $db = \DB::get_instance();
-        $stmt = $db->prepare("SELECT * FROM books where qty_left>0 AND isbn NOT IN (SELECT isbn from books_user where name = ? union all select isbn from requests where name = ? )");
+        $stmt = $db->prepare("SELECT book_name, author FROM books where qty_left>0 AND isbn NOT IN (SELECT isbn from books_user where name = ? union all select isbn from requests where name = ? )");
         $stmt->execute([$name, $name]);
         $rows = $stmt->fetchAll();
         return $rows;
     }
 
-    public static function book($book_name)
+    //* to bopkname author isbn
+    public static function book($isbn)
     {
         $db = \DB::get_instance();
-        $stmt = $db->prepare("SELECT * FROM books WHERE book_name = ?");
-        $stmt->execute([$book_name]);
+        $stmt = $db->prepare("SELECT book_name, author, isbn FROM books WHERE isbn = ?");
+        $stmt->execute([$isbn]);
         $row = $stmt->fetch();
         return $row;
     }
@@ -100,9 +109,16 @@ class Post
     public static function addBook($name, $auth, $qty)
     {
         $db = \DB::get_instance();
-        $stmt = $db->prepare("SELECT * FROM books WHERE book_name = ?");
+        $stmt = $db->prepare("SELECT qty, qty_left FROM books WHERE book_name = ?");
         $stmt->execute([$name]);
         $result = $stmt->fetch();
+        return $result;
+        $qty = $result[0];
+        $qty_left = $result[1];
+        // return [
+        //     $qty,
+        //     $qty_left,
+        // ];
     }
 
     public static function addBookOnResNull($name, $auth, $qty, $isbn)
@@ -119,10 +135,11 @@ class Post
         $stmt2->execute([$qty, $qty_left, $name]);
     }
 
+    //* chnaged to isbn
     public static function deleteBook($name)
     {
         $db = \DB::get_instance();
-        $stmt = $db->prepare("SELECT * FROM books WHERE book_name = ?");
+        $stmt = $db->prepare("SELECT isbn FROM books WHERE book_name = ?");
         $stmt->execute([$name]);
         $result = $stmt->fetch();
         $TEMP = $result[0];
@@ -145,32 +162,35 @@ class Post
         $stmt2->execute([$isbn, $name, $time]);
     }
 
+    //* changed qty_left
     public static function checkReqD($isbn, $name)
     {
         $db = \DB::get_instance();
         $stmt = $db->prepare("DELETE FROM requests WHERE isbn = ?");
         $stmt->execute([$isbn]);
-        $stmt3 = $db->prepare("SELECT * FROM books WHERE isbn = ?");
+        $stmt3 = $db->prepare("SELECT qty_left FROM books WHERE isbn = ?");
         $stmt3->execute([$isbn]);
         $res = $stmt3->fetch();
-        return $res;
+        return $res[0];
     }
 
-    public static function checkReqDPost($isbn, $qty_left)
+    //checkReqDPost -> checkReqDUpdateQty
+    public static function checkReqDUpdateQty($isbn, $qty_left)
     {
         $db = \DB::get_instance();
         $stmt2 = $db->prepare("UPDATE books SET qty_left = ? WHERE isbn = ?");
         $stmt2->execute([$qty_left, $isbn]);
     }
 
+    //* chnaged
     public static function regApproval($name)
     {
         $db = \DB::get_instance();
-        $stmt = $db->prepare("SELECT * FROM admin_registration WHERE name = ?");
+        $stmt = $db->prepare("SELECT hash, salt FROM admin_registration WHERE name = ?");
         $stmt->execute([$name]);
         $result = $stmt->fetch();
-        $hash = $result[1];
-        $salt = $result[2];
+        $hash = $result[0];
+        $salt = $result[1];
         $role = 'admin';
         $stmt = $db->prepare("DELETE FROM admin_registration WHERE name = ?");
         $stmt->execute([$name]);
@@ -185,67 +205,75 @@ class Post
         $stmt->execute([$name]);
     }
 
-    public static function checkRC($name, $isbn)
+    //checkRC -> addCheckOutReq
+    public static function addCheckOutReq($name, $isbn)
     {
         $db = \DB::get_instance();
         $stmt = $db->prepare("INSERT INTO requests (name, isbn) VALUES(?,?)");
         $stmt->execute([$name, $isbn]);
-        $stmt3 = $db->prepare("SELECT * FROM books WHERE isbn = ?");
+        $stmt3 = $db->prepare("SELECT qty_left FROM books WHERE isbn = ?");
         $stmt3->execute([$isbn]);
         $res = $stmt3->fetch();
-        return $res;
+        return $res[0];
     }
 
-    public static function checkRCPost($qty_left, $isbn)
+    //checkRCPost -> decQtyOnCheckOutReq
+    public static function decQtyOnCheckOutReq($qty_left, $isbn)
     {
         $db = \DB::get_instance();
         $stmt2 = $db->prepare("UPDATE books SET qty_left = ? WHERE isbn = ?");
         $stmt2->execute([$qty_left, $isbn]);
     }
 
+    //urBk -> yourBook, * changed
     public static function urBk($name)
     {
         $db = \DB::get_instance();
-        $stmt = $db->prepare("SELECT books.* from books inner join books_user on books_user.isbn = books.isbn where books_user.name = ?");
+        $stmt = $db->prepare("SELECT books.book_name, books.author, books.isbn from books inner join books_user on books_user.isbn = books.isbn where books_user.name = ?");
         $stmt->execute([$name]);
         $rows = $stmt->fetchAll();
         return $rows;
     }
 
-    public static function urBkDlt($name, $isbn)
+    //urBkDlt -> checkInApp
+    public static function checkInApp($name, $isbn)
     {
+        //Automatically done
         $db = \DB::get_instance();
         $stmt = $db->prepare("DELETE FROM books_user WHERE  isbn = ? AND name = ?");
         $stmt->execute([$isbn, $name]);
-        $stmt3 = $db->prepare("SELECT * FROM books WHERE isbn = ?");
+        $stmt3 = $db->prepare("SELECT qty_left FROM books WHERE isbn = ?");
         $stmt3->execute([$isbn]);
         $res = $stmt3->fetch();
-        return $res;
+        return $res[0];
     }
 
-    public static function urBkDltPost($name, $isbn, $qty_left)
+    //urBkDltPost -> incQtyCheckInApp
+    public static function incQtyCheckInApp($name, $isbn, $qty_left)
     {
         $db = \DB::get_instance();
         $stmt2 = $db->prepare("UPDATE books SET qty_left = ? WHERE isbn = ?");
         $stmt2->execute([$qty_left, $isbn]);
-        $stmt2 = $db->prepare("SELECT * FROM fees WHERE isbn = ? AND name = ?");
+        $stmt2 = $db->prepare("SELECT in_time FROM fees WHERE isbn = ? AND name = ?");
         $stmt2->execute([$isbn, $name]);
         $res = $stmt2->fetch();
-        return $res;
+        return $res[0];
     }
 
-    public static function urBkDltPostPost($name, $isbn, $fees, $time)
+    //urBkDltPostPost -> feesPostCheckIn
+    public static function feesPostCheckIn($name, $isbn, $fees, $time)
     {
         $db = \DB::get_instance();
         $stmt2 = $db->prepare("UPDATE fees SET out_time = ?, fees = ? WHERE isbn = ? AND name = ?");
         $stmt2->execute([$time, $fees, $isbn, $name]);
-        $stmt2 = $db->prepare("SELECT * FROM total_amt WHERE name = ?");
+        $stmt2 = $db->prepare("SELECT fees FROM total_amt WHERE name = ?");
         $stmt2->execute([$name]);
         $res = $stmt2->fetch();
-        return $res;
+        return $res[0];
     }
 
-    public static function urBkDltPostPostPost($name, $fees)
+    //urBkDltPostPostPost -> updateFeesOnCheckIn
+    public static function updateFeesOnCheckIn($name, $fees)
     {
         $db = \DB::get_instance();
         $stmt2 = $db->prepare("UPDATE total_amt SET fees = ? WHERE name = ?");

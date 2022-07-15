@@ -7,7 +7,7 @@ class AnyDataPg
     public static function get()
     {
         session_destroy();
-        require __DIR__ . "./../views/templates/a.twig";
+        require __DIR__ . "./../views/templates/any_data_pg.twig";
     }
     
     public static function post()

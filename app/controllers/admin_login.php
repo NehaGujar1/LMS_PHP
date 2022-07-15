@@ -12,8 +12,10 @@ class AdminLog
 
     public function post()
     {
-        if (isset($_POST["name"])) $name = $_POST["name"];
-        if (isset($_POST["password"])) $password = $_POST["password"];
+        if (isset($_POST["name"])) 
+            $name = $_POST["name"];
+        if (isset($_POST["password"])) 
+            $password = $_POST["password"];
         $role = 'admin';
         if (isset($_POST["name"]) && isset($_POST["password"])) {
             $salt =  \Model\Post::checkReg($name, 'admin');

@@ -18,16 +18,20 @@ class AddBooks
     public function post()
     {
         session_start();
-        if (isset($_POST["add_new_book"])) $bk_name = $_POST["add_new_book"];
-        if (isset($_POST["add_author"])) $author = $_POST["add_author"];
-        if (isset($_POST["add_qty"])) $qty = $_POST["add_qty"];
-        if ($_POST["end"]) {
+        if (isset($_POST["add_new_book"])) 
+            $bk_name = $_POST["add_new_book"];
+        if (isset($_POST["add_author"])) 
+            $author = $_POST["add_author"];
+        if (isset($_POST["add_qty"])) 
+            $qty = $_POST["add_qty"];
+        if (isset($_POST["end"])) {
             $_SESSION["logged_ad"] = true;
             header("Location: /admin_log_page");
             exit();
         } else if (isset($_POST["add_new_book"]) && isset($_POST["add_author"]) && isset($_POST["add_qty"])) {
 
             $res = \Model\Post::addBook($bk_name, $author, $qty);
+            //$str_arr = explode(",--", $res);
             if ($res == null) {
                 $isbn = time() * 1000;
                 \Model\Post::addBookOnResNull($bk_name, $author, $qty, $isbn);

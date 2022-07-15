@@ -12,8 +12,10 @@ class ClientLog
 
     public function post()
     {
-        if (isset($_POST["name"])) $name = $_POST["name"];
-        if (isset($_POST["password"])) $password = $_POST["password"];
+        if (isset($_POST["name"])) 
+            $name = $_POST["name"];
+        if (isset($_POST["password"])) 
+            $password = $_POST["password"];
         $role = 'user';
         if (isset($_POST["password"]) && isset($_POST["name"])) {
             $salt =  \Model\Post::checkReg($name, 'user');
