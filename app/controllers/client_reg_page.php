@@ -13,7 +13,8 @@ class ClientRegPg
                 "sp" => \Model\Post::getAllSp($name),
                 "name" => $name,
             ));
-        } else require __DIR__ . "./../views/templates/home2.twig";
+        } 
+        else require __DIR__ . "./../views/templates/home2.twig";
     }
 
     public function post()

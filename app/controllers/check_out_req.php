@@ -11,7 +11,8 @@ class CheckOutReqs
             echo \View\Loader::make()->render("check_out_req.twig", array(
                 "reqs" => \Model\Post::getAllReq(),
             ));
-        } else
+        } 
+        else
             require __DIR__ . "./../views/templates/home2.twig";
     }
 

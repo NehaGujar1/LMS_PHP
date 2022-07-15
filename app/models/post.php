@@ -5,7 +5,6 @@ namespace Model;
 class Post
 {
 
-    //* is changed to salt
     public static function checkReg($name, $role)
     {
         //To check whether he/she is registered or not
@@ -13,13 +12,10 @@ class Post
         $stmt = $db->prepare("SELECT salt from client_admin WHERE role = ? AND name = ?");
         $stmt->execute([$role, $name]);
         $result = $stmt->fetch();
-        // $vart = $result;
         $salt = $result[0];
-        echo $salt;
         return $salt;
     }
 
-    //* is chnaged to name
     public static function checkRegPost($name, $hash, $role)
     {
         $db = \DB::get_instance();
@@ -29,7 +25,6 @@ class Post
         return $final;
     }
 
-    //* is chnaged to name
     public static function check($name, $role)
     {
         //Pre-registration check to ensure unique username
@@ -56,7 +51,6 @@ class Post
         $stmt->execute([$name, $hash, $salt]);
     }
 
-    //* chnaged to book_name,isbn,author
     public static function getAll()
     {
         $db = \DB::get_instance();
@@ -66,7 +60,6 @@ class Post
         return $rows;
     }
 
-    //* chnaged to req.name, req.isbn
     public static function getAllReq()
     {
         $db = \DB::get_instance();
@@ -76,7 +69,6 @@ class Post
         return $rows;
     }
 
-    //* to name
     public static function getAllReg()
     {
         $db = \DB::get_instance();
@@ -86,7 +78,6 @@ class Post
         return $rows;
     }
 
-    //* to book name author
     public static function getAllSp($name)
     {
         $db = \DB::get_instance();
@@ -96,7 +87,6 @@ class Post
         return $rows;
     }
 
-    //* to bopkname author isbn
     public static function book($isbn)
     {
         $db = \DB::get_instance();
@@ -113,12 +103,6 @@ class Post
         $stmt->execute([$name]);
         $result = $stmt->fetch();
         return $result;
-        $qty = $result[0];
-        $qty_left = $result[1];
-        // return [
-        //     $qty,
-        //     $qty_left,
-        // ];
     }
 
     public static function addBookOnResNull($name, $auth, $qty, $isbn)
@@ -135,7 +119,6 @@ class Post
         $stmt2->execute([$qty, $qty_left, $name]);
     }
 
-    //* chnaged to isbn
     public static function deleteBook($name)
     {
         $db = \DB::get_instance();
@@ -162,7 +145,6 @@ class Post
         $stmt2->execute([$isbn, $name, $time]);
     }
 
-    //* changed qty_left
     public static function checkReqD($isbn, $name)
     {
         $db = \DB::get_instance();
@@ -174,7 +156,6 @@ class Post
         return $res[0];
     }
 
-    //checkReqDPost -> checkReqDUpdateQty
     public static function checkReqDUpdateQty($isbn, $qty_left)
     {
         $db = \DB::get_instance();
@@ -182,7 +163,6 @@ class Post
         $stmt2->execute([$qty_left, $isbn]);
     }
 
-    //* chnaged
     public static function regApproval($name)
     {
         $db = \DB::get_instance();
@@ -205,7 +185,6 @@ class Post
         $stmt->execute([$name]);
     }
 
-    //checkRC -> addCheckOutReq
     public static function addCheckOutReq($name, $isbn)
     {
         $db = \DB::get_instance();
@@ -217,7 +196,6 @@ class Post
         return $res[0];
     }
 
-    //checkRCPost -> decQtyOnCheckOutReq
     public static function decQtyOnCheckOutReq($qty_left, $isbn)
     {
         $db = \DB::get_instance();
@@ -225,7 +203,6 @@ class Post
         $stmt2->execute([$qty_left, $isbn]);
     }
 
-    //urBk -> yourBook, * changed
     public static function urBk($name)
     {
         $db = \DB::get_instance();
@@ -235,7 +212,6 @@ class Post
         return $rows;
     }
 
-    //urBkDlt -> checkInApp
     public static function checkInApp($name, $isbn)
     {
         //Automatically done
@@ -248,7 +224,6 @@ class Post
         return $res[0];
     }
 
-    //urBkDltPost -> incQtyCheckInApp
     public static function incQtyCheckInApp($name, $isbn, $qty_left)
     {
         $db = \DB::get_instance();
@@ -260,7 +235,6 @@ class Post
         return $res[0];
     }
 
-    //urBkDltPostPost -> feesPostCheckIn
     public static function feesPostCheckIn($name, $isbn, $fees, $time)
     {
         $db = \DB::get_instance();
@@ -272,7 +246,6 @@ class Post
         return $res[0];
     }
 
-    //urBkDltPostPostPost -> updateFeesOnCheckIn
     public static function updateFeesOnCheckIn($name, $fees)
     {
         $db = \DB::get_instance();

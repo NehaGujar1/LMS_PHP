@@ -24,8 +24,8 @@ class DeleteBooks
             exit();
         } 
         else {
-            $array = $_POST["delete_books"];
-            \Model\Post::deleteBook($array);
+            $book_name = $_POST["delete_books"];
+            \Model\Post::deleteBook($book_name);
             echo \View\Loader::make()->render("delete_books.twig", array(
                 "posts" => \Model\Post::getAll(),
                 "deleted" => true,

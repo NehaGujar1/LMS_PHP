@@ -11,7 +11,8 @@ class AdminApp
             echo \View\Loader::make()->render("admin_reg_app.twig", array(
                 "regs" => \Model\Post::getAllReg(),
             ));
-        } else require __DIR__ . "./../views/templates/home2.twig";
+        } 
+        else require __DIR__ . "./../views/templates/home2.twig";
     }
     
     public function post()

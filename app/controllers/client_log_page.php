@@ -45,13 +45,13 @@ class ClientLogPg
                 $isbn2 = $str_arr[0];
                 $res2 = \Model\Post::checkInApp($name, $isbn2);
                 $qty_left = $res2 + 1;
-                \Model\Post::incQtyCheckInApp($name, $isbn2, $qty_left);
+                $res2 =\Model\Post::incQtyCheckInApp($name, $isbn2, $qty_left);
                 $time = time();
                 $fees = 0;
                 $diff = $time - $res2;
                 if ($diff > 604800) {
                     //Every day charge is 1 Rs
-                    $fees = (int)(($diff - 604800) / 86400);
+                    $fees = (int)(($diff - 604800)/86400);
                 }
                 $res = \Model\Post::feesPostCheckIn($name, $isbn2, $fees, $time);
                 $fees = $res + $fees;

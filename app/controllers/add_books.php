@@ -28,14 +28,16 @@ class AddBooks
             $_SESSION["logged_ad"] = true;
             header("Location: /admin_log_page");
             exit();
-        } else if (isset($_POST["add_new_book"]) && isset($_POST["add_author"]) && isset($_POST["add_qty"])) {
+        } 
+        else if (isset($_POST["add_new_book"]) && isset($_POST["add_author"]) && isset($_POST["add_qty"])) {
 
             $res = \Model\Post::addBook($bk_name, $author, $qty);
             //$str_arr = explode(",--", $res);
             if ($res == null) {
                 $isbn = time() * 1000;
                 \Model\Post::addBookOnResNull($bk_name, $author, $qty, $isbn);
-            } else {
+            } 
+            else {
                 $qty = $res[3] + $qty;
                 $qty_left = $res[4] + $qty;
                 \Model\Post::addBookQtyInc($bk_name, $qty, $qty_left);
@@ -44,7 +46,8 @@ class AddBooks
                 "posts" => \Model\Post::getAll(),
                 "added" => true,
             ));
-        } else {
+        } 
+        else {
             echo \View\Loader::make()->render("add_books.twig", array(
                 "posts" => \Model\Post::getAll(),
             ));

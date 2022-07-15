@@ -9,7 +9,8 @@ class AdminLogPage
         session_start();
         if ($_SESSION["logged_ad"] == true) {
             require __DIR__ . "./../views/templates/admin_log_page.twig";
-        } else
+        } 
+        else
             require __DIR__ . "./../views/templates/home2.twig";
     }
 
