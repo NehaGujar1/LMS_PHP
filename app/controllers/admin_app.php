@@ -25,16 +25,16 @@ class AdminApp
         } 
         else {
             if (isset($_POST["admin_reg_app"])) {
-                $array = $_POST["admin_reg_app"];
-                \Model\Post::RegApproval($array);
+                $approval = $_POST["admin_reg_app"];
+                \Model\Post::RegApproval($approval);
                 echo \View\Loader::make()->render("admin_reg_app.twig", array(
                     "regs" => \Model\Post::getAllReg(),
                     "approved" => true,
                 ));
             }
             if (isset($_POST["admin_reg_app_d"])) {
-                $array3 = $_POST["admin_reg_app_d"];
-                \Model\Post::RegDisapproval($array3);
+                $disapproval = $_POST["admin_reg_app_d"];
+                \Model\Post::RegDisapproval($disapproval);
                 echo \View\Loader::make()->render("admin_reg_app.twig", array(
                     "regs" => \Model\Post::getAllReg(),
                     "disapproved" => true,

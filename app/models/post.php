@@ -12,7 +12,7 @@ class Post
         $stmt = $db->prepare("SELECT salt from client_admin WHERE role = ? AND name = ?");
         $stmt->execute([$role, $name]);
         $result = $stmt->fetch();
-        $salt = $result[0];
+        $salt = $result[\Enum\constant::zero];
         return $salt;
     }
 
@@ -41,7 +41,7 @@ class Post
         $stmt = $db->prepare("INSERT INTO client_admin (name, hash, salt, role) VALUES(?,?,?,?)");
         $stmt->execute([$name, $hash, $salt, $role]);
         $stmt = $db->prepare("INSERT INTO total_amt (name,fees) VALUES(?,?)");
-        $stmt->execute([$name, 0]);
+        $stmt->execute([$name, \Enum\constant::zero]);
     }
 
     public static function insertAdminReg($name, $password, $role, $salt, $hash)
@@ -81,7 +81,7 @@ class Post
     public static function getAllSp($name)
     {
         $db = \DB::get_instance();
-        $stmt = $db->prepare("SELECT book_name, author FROM books where qty_left>0 AND isbn NOT IN (SELECT isbn from books_user where name = ? union all select isbn from requests where name = ? )");
+        $stmt = $db->prepare("SELECT book_name, author, isbn FROM books where qty_left>0 AND isbn NOT IN (SELECT isbn from books_user where name = ? union all select isbn from requests where name = ? )");
         $stmt->execute([$name, $name]);
         $rows = $stmt->fetchAll();
         return $rows;
@@ -125,7 +125,7 @@ class Post
         $stmt = $db->prepare("SELECT isbn FROM books WHERE book_name = ?");
         $stmt->execute([$name]);
         $result = $stmt->fetch();
-        $TEMP = $result[0];
+        $TEMP = $result[\Enum\constant::isbn];
         $stmt = $db->prepare("DELETE FROM books WHERE isbn = ?");
         $stmt->execute([$TEMP]);
         $stmt = $db->prepare("DELETE FROM books_user WHERE isbn = ?");
@@ -152,8 +152,8 @@ class Post
         $stmt->execute([$isbn]);
         $stmt3 = $db->prepare("SELECT qty_left FROM books WHERE isbn = ?");
         $stmt3->execute([$isbn]);
-        $res = $stmt3->fetch();
-        return $res[0];
+        $qty_left = $stmt3->fetch();
+        return $qty_left[\Enum\constant::zero];
     }
 
     public static function checkReqDUpdateQty($isbn, $qty_left)
@@ -169,8 +169,8 @@ class Post
         $stmt = $db->prepare("SELECT hash, salt FROM admin_registration WHERE name = ?");
         $stmt->execute([$name]);
         $result = $stmt->fetch();
-        $hash = $result[0];
-        $salt = $result[1];
+        $hash = $result[\Enum\constant::zero];
+        $salt = $result[\Enum\constant::one];
         $role = 'admin';
         $stmt = $db->prepare("DELETE FROM admin_registration WHERE name = ?");
         $stmt->execute([$name]);
@@ -192,8 +192,8 @@ class Post
         $stmt->execute([$name, $isbn]);
         $stmt3 = $db->prepare("SELECT qty_left FROM books WHERE isbn = ?");
         $stmt3->execute([$isbn]);
-        $res = $stmt3->fetch();
-        return $res[0];
+        $qty_left = $stmt3->fetch();
+        return $qty_left[\Enum\constant::zero];
     }
 
     public static function decQtyOnCheckOutReq($qty_left, $isbn)
@@ -220,8 +220,8 @@ class Post
         $stmt->execute([$isbn, $name]);
         $stmt3 = $db->prepare("SELECT qty_left FROM books WHERE isbn = ?");
         $stmt3->execute([$isbn]);
-        $res = $stmt3->fetch();
-        return $res[0];
+        $qty_left = $stmt3->fetch();
+        return $qty_left[\Enum\constant::zero];
     }
 
     public static function incQtyCheckInApp($name, $isbn, $qty_left)
@@ -231,8 +231,8 @@ class Post
         $stmt2->execute([$qty_left, $isbn]);
         $stmt2 = $db->prepare("SELECT in_time FROM fees WHERE isbn = ? AND name = ?");
         $stmt2->execute([$isbn, $name]);
-        $res = $stmt2->fetch();
-        return $res[0];
+        $in_time = $stmt2->fetch();
+        return $in_time[\Enum\constant::zero];
     }
 
     public static function feesPostCheckIn($name, $isbn, $fees, $time)
@@ -242,8 +242,8 @@ class Post
         $stmt2->execute([$time, $fees, $isbn, $name]);
         $stmt2 = $db->prepare("SELECT fees FROM total_amt WHERE name = ?");
         $stmt2->execute([$name]);
-        $res = $stmt2->fetch();
-        return $res[0];
+        $fees = $stmt2->fetch();
+        return $fees[\Enum\constant::zero];
     }
 
     public static function updateFeesOnCheckIn($name, $fees)
@@ -258,7 +258,7 @@ class Post
         $db = \DB::get_instance();
         $stmt3 = $db->prepare("SELECT fees FROM total_amt WHERE name = ?");
         $stmt3->execute([$name]);
-        $res = $stmt3->fetch();
-        return $res;
+        $fees = $stmt3->fetch();
+        return $fees;
     }
 }

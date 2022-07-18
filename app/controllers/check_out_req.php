@@ -27,8 +27,8 @@ class CheckOutReqs
         else if (isset($_POST["check_out_req"])) {
             $temp = $_POST["check_out_req"];
             $str_arr = explode(",--", $temp);
-            $name = $str_arr[1];
-            $isbn = $str_arr[0];
+            $name = $str_arr[\Enum\constant::one];
+            $isbn = $str_arr[\Enum\constant::zero];
             $time = time();
             \Model\Post::checkReq($isbn, $name, $time);
             echo \View\Loader::make()->render("check_out_req.twig", array(
@@ -39,8 +39,8 @@ class CheckOutReqs
         else if (isset($_POST["check_out_req_d"])) {
             $temp = $_POST["check_out_req_d"];
             $str_arr = explode(",--", $temp);
-            $name = $str_arr[1];
-            $isbn = $str_arr[0];
+            $name = $str_arr[\Enum\constant::one];
+            $isbn = $str_arr[\Enum\constant::zero];
             $res = \Model\Post::checkReqD($isbn, $name);
             $qty_left = $res + 1;
             \Model\Post::checkReqDUpdateQty($isbn, $qty_left);

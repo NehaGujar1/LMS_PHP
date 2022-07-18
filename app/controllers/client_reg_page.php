@@ -30,8 +30,8 @@ class ClientRegPg
         else {
             $bk_name = $_POST["client_reg_pg"];
             $str_arr = explode(",--", $bk_name);
-            $name = $str_arr[1];
-            $isbn = $str_arr[0];
+            $name = $str_arr[\Enum\constant::one];
+            $isbn = $str_arr[\Enum\constant::zero];
             $res = \Model\Post::addCheckOutReq($name, $isbn);
             $qty_left = $res - 1;
             \Model\Post::decQtyOnCheckOutReq($qty_left, $isbn);

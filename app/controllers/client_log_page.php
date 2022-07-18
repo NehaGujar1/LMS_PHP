@@ -32,8 +32,8 @@ class ClientLogPg
             if (isset($_POST["client_log_pg"])) {
                 $bk_name = $_POST["client_log_pg"];
                 $str_arr = explode(",--", $bk_name);
-                $name = $str_arr[1];
-                $isbn = $str_arr[0];
+                $name = $str_arr[\Enum\constant::one];
+                $isbn = $str_arr[\Enum\constant::zero];
                 $res = \Model\Post::addCheckOutReq($name, $isbn);
                 $qty_left = $res - 1;
                 \Model\Post::decQtyOnCheckOutReq($qty_left, $isbn);
@@ -41,8 +41,8 @@ class ClientLogPg
             if (isset($_POST["ur_bkk"])) {
                 $ck_name = $_POST["ur_bkk"];
                 $str_arr = explode(",--", $ck_name);
-                $name = $str_arr[1];
-                $isbn2 = $str_arr[0];
+                $name = $str_arr[\Enum\constant::one];
+                $isbn2 = $str_arr[\Enum\constant::zero];
                 $res2 = \Model\Post::checkInApp($name, $isbn2);
                 $qty_left = $res2 + 1;
                 $res2 =\Model\Post::incQtyCheckInApp($name, $isbn2, $qty_left);

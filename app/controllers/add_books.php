@@ -38,9 +38,9 @@ class AddBooks
                 \Model\Post::addBookOnResNull($bk_name, $author, $qty, $isbn);
             } 
             else {
-                $qty = $res[3] + $qty;
-                $qty_left = $res[4] + $qty;
-                \Model\Post::addBookQtyInc($bk_name, $qty, $qty_left);
+                $qty_final = $res[\Enum\constant::qty] + $qty;
+                $qty_left = $res[\Enum\constant::qty_left] + $qty;
+                \Model\Post::addBookQtyInc($bk_name, $qty_final, $qty_left);
             }
             echo \View\Loader::make()->render("add_books.twig", array(
                 "posts" => \Model\Post::getAll(),
