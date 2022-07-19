@@ -8,7 +8,7 @@
 2. Now we will have to do a few installations:     
   i) Composer: 
      This must be installed in the **project directory** i.e. go to the project   directory and run :   
-     `sudo apt update'
+     `sudo apt update`
      `sudo apt install php-cli unzip`
      `cd ~`
      `curl -sS https://getcomposer.org/installer -o /tmp/composer-setup.php`
