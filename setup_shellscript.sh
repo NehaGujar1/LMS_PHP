@@ -27,6 +27,8 @@ else
 	echo '$DB_PASSWORD= "'$db_pwd'";'>>config/config.php
 	echo '?>'>>config/config.php
 	echo “Now, we will import the schema”
+	cd schema
 	mysql -u $db_username -p $db_name < schema.sql
+	cd ..
         server_start
 fi
