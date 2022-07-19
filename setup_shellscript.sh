@@ -18,11 +18,11 @@ else
 	read -p -s 'Enter your password' db_pwd
 	touch config/config.php
 	echo '<?php'>config/config.php
-	echo '$DB_HOST= '$db_host';'>>config/config.php
-	echo '$DB_PORT= '$db_port';'>>config/config.php
-	echo '$DB_NAME= '$db_name_of_database';'>>config/config.php
-	echo '$DB_USERNAME= '$db_username';'>>config/config.php
-	echo '$DB_PASSWORD= '$db_pwd';'>>config/config.php
+	echo '$DB_HOST= "'$db_host'";'>>config/config.php
+	echo '$DB_PORT= "'$db_port'";'>>config/config.php
+	echo '$DB_NAME= "'$db_name_of_database'";'>>config/config.php
+	echo '$DB_USERNAME= "'$db_username'";'>>config/config.php
+	echo '$DB_PASSWORD= "'$db_pwd'";'>>config/config.php
 	echo '?>'>>config/config.php
 	echo “Now, we will import the schema”
 	mysql -u $db_username -p $db_name < schema.sql
