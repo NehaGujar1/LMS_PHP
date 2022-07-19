@@ -1,12 +1,14 @@
 #! /bin/bash
 
-
+server_start(){
+        echo "Starting server at port 8001"
+	cd public/
+	php -S localhost:8001
+}
 
 if [[ -f "config/config.php" ]]; then
 	echo "The required file exists"
-	echo "Starting server at port 8001"
-	cd public/
-	php -S localhost:8001
+        server_start
 else
 	echo "We will have to create a new database inorder to import the schema sql"	
 	$db_host,$db_port,$db_username,$db_name_of_database,$db_pwd
@@ -26,7 +28,5 @@ else
 	echo '?>'>>config/config.php
 	echo “Now, we will import the schema”
 	mysql -u $db_username -p $db_name < schema.sql
-	echo "Starting server at port 8001"
-	cd public/
-	php -S localhost:8001
+        server_start
 fi
