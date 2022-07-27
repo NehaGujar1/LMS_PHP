@@ -12,7 +12,7 @@ class AdminApp
                 "regs" => \Model\Post::getAllReg(),
             ));
         } 
-        else require __DIR__ . "./../views/templates/home2.twig";
+        else require __DIR__ . "./../views/templates/home.twig";
     }
     
     public function post()

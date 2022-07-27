@@ -12,7 +12,7 @@ class AddBooks
                 "posts" => \Model\Post::getAll(),
             ));
         } else
-            require __DIR__ . "./../views/templates/home2.twig";
+            require __DIR__ . "./../views/templates/home.twig";
     }
     
     public function post()
@@ -32,7 +32,6 @@ class AddBooks
         else if (isset($_POST["add_new_book"]) && isset($_POST["add_author"]) && isset($_POST["add_qty"])) {
 
             $res = \Model\Post::addBook($bk_name, $author, $qty);
-            //$str_arr = explode(",--", $res);
             if ($res == null) {
                 $isbn = time() * 1000;
                 \Model\Post::addBookOnResNull($bk_name, $author, $qty, $isbn);

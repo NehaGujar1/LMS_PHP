@@ -13,7 +13,7 @@ class CheckOutReqs
             ));
         } 
         else
-            require __DIR__ . "./../views/templates/home2.twig";
+            require __DIR__ . "./../views/templates/home.twig";
     }
 
     public function post()

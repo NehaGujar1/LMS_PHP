@@ -11,7 +11,7 @@ class DeleteBooks
             echo \View\Loader::make()->render("delete_books.twig", array(
                 "posts" => \Model\Post::getAll(),
             ));
-        } else require __DIR__ . "./../views/templates/home2.twig";
+        } else require __DIR__ . "./../views/templates/home.twig";
     }
 
     public function post()

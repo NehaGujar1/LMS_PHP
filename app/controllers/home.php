@@ -7,7 +7,7 @@ class Home
     public function get()
     {
         session_destroy();
-        require __DIR__ . "./../views/templates/home2.twig";
+        require __DIR__ . "./../views/templates/home.twig";
     }
 
     public function post()
