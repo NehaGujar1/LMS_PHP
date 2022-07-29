@@ -28,7 +28,7 @@ else
 	echo '?>'>>config/config.php
 	echo “Importing schema”
 	cd schema
-	mysql -u $db_username -p $db_name < schema.sql
+	MYSQL_PWD=$db_pwd mysql -u $db_username < schema.sql
 	cd ..
         server_start
 fi
