@@ -29,10 +29,8 @@ else
 	echo “Importing schema”
 	$bool
 	read -p 'Has this database been already created?If no enter 1 else enter 0' bool
-	echo $bool
 	if [ $bool -eq 1 ]; then
 		MYSQL_PWD=$db_pwd mysql -u $db_username -e 'CREATE DATABASE '$db_name_of_database;
-		echo "hello"
 	fi
 	if MYSQL_PWD=$db_pwd mysql -u $db_username $db_name_of_database < schema/schema.sql; then 
 		echo 'Admin: gamma Password: 1 can be used'
